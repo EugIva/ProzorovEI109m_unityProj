@@ -1,7 +1,9 @@
 # ProzorovEI109m_unityProj
 
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&center=true&vCenter=true&multiline=true&random=false&width=435&height=70&lines=Unity+3D;%D0%98%D0%B3%D1%80%D0%B0%2C+GDD+%D0%B8+%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D0%B5)](https://git.io/typing-svg)
+> [!NOTE]
+> Игра, ГДД и прочее по курсу Unity 3D
 
-Игра, ГДД и прочее по курсу Unity 3D
 
 🎓  Прозоров Евгений Иванович 109М
 
