@@ -8,7 +8,7 @@
 🎓  Прозоров Евгений Иванович 109М
 
 📧 eugene_ivanson@mail.ru
-tg: @Eug_Iva
+tg: @Eugiva
 
 
 GDD:
