@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{CD3C52B7-20C6-0CC5-D7C7-0097543C504B}</ProjectGuid>
+    <ProjectGuid>{D0F74257-F6B2-DCEA-FC51-AA11C694D4B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -58,59 +58,12 @@
     <Analyzer Include="D:\unity\unityProg\2022.3.9f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AFPC\Scripts\Grab\Enemy.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Misc\AFPC_Platform.cs" />
-    <Compile Include="Assets\AFPC\Scripts\DemoScenes\AFPC_D_Valve.cs" />
-    <Compile Include="Assets\AFPC\Scripts\TouchInput\AFPC_VirtualJoystick.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Grab\AFPC_Grab.cs" />
-    <Compile Include="Assets\AFPC\Scripts\DemoScenes\AFPC_D_Spikes.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_HealthManager.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Camera\AFPC_LegsCam.cs" />
-    <Compile Include="Assets\AFPC\Scripts\DemoScenes\AFPC_D_LoadingScene.cs" />
-    <Compile Include="Assets\AFPC\Scripts\TouchInput\AFPC_VirtualButton.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Grab\AFPC_PlayerGrabber.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_StaminaManager.cs" />
-    <Compile Include="Assets\AFPC\Scripts\TouchInput\AFPC_DynamicVirtualJoystick.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_FootstepsSystem.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Misc\AFPC_Door.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Misc\AFPC_PlayerFollow.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_FootstepsManager.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_PickupManager.cs" />
-    <Compile Include="Assets\AFPC\Scripts\DemoScenes\AFPC_D_LevelManager.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Image Effects\AFPC_UnderWaterDisplaceEffect.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Camera\AFPC_Cam.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Pickup\AFPC_OxygenPickup.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Pickup\AFPC_StaminaPickup.cs" />
-    <Compile Include="Assets\AFPC\Scripts\TerrainTextureDetector\TerrainSurface.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Minimap\AFPC_MinimapCam.cs" />
-    <Compile Include="Assets\AFPC\Scripts\TouchInput\AFPC_StaticVirtualJoystick.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_SpawnManager.cs" />
-    <Compile Include="Assets\AFPC\Scripts\UI\AFPC_UIBar.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Misc\AFPC_DoorKey.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Grab\EnemyAttack.cs" />
-    <Compile Include="Assets\AFPC\Scripts\TouchInput\AFPC_TouchPad.cs" />
-    <Compile Include="Assets\AFPC\Scripts\DemoScenes\AFPC_D_PauseMenu.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Player\AFPC_Player_ClimbEnter.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Water\AFPC_WaterMover.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_OxygenManager.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_DoorManager.cs" />
-    <Compile Include="Assets\AFPC\Scripts\DemoScenes\Demo Scene2\AFPC_Door_KeyNTFC.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Pickup\AFPC_HealthPickup.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Water\AFPC_WaterZone.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Image Effects\AFPC_UnderWaterBlurEffect.cs" />
-    <Compile Include="Assets\AFPC\Scripts\DemoScenes\AFPC_D_NOTFCTN.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Pickup\AFPC_ItemPickup.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Managers\AFPC_Surface.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Player\Rigidbody Player\AFPC_PlayerMovement.cs" />
-    <Compile Include="Assets\AFPC\Scripts\Player\Legs\AFPC_Legs.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\AFPC\Scripts\Image Effects\UnderWaterBlur.shader" />
-    <None Include="Assets\AFPC\Content\Soundcredits.txt" />
-    <None Include="Assets\AFPC\Content\Models\BlackantMasterStudio\Credits.txt" />
-    <None Include="Assets\AFPC\Scripts\Image Effects\Readme.txt" />
-    <None Include="Assets\AFPC\Scripts\Image Effects\DisplacementShader.shader" />
-    <None Include="Assets\AFPC\Content\Minimap\MinimapReadMe.txt" />
+    <Compile Include="Assets\Camera.cs" />
+    <Compile Include="Assets\whenSomeOneKillMe.cs" />
+    <Compile Include="Assets\FollowCamera.cs" />
+    <Compile Include="Assets\PlayerMovement.cs" />
+    <Compile Include="Assets\MakeHarderOne.cs" />
+    <Compile Include="Assets\movementSecond.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
