@@ -42,3 +42,6 @@ Assets/StreamingAssets/crashlytics-build.properties
 
 # Logs
 Logs/
+
+#User settings
+UserSettings/
