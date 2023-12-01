@@ -40,5 +40,5 @@ sysinfo.txt
 # Crashlytics generated file
 Assets/StreamingAssets/crashlytics-build.properties
 
-# Unity3D Project Settings ENABLE IF U NEED
-Logs/ 
+# Logs
+Logs/
