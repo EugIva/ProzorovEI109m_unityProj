@@ -45,3 +45,4 @@ Logs/
 
 # Unity3D Project Settings ENABLE IF U NEED
 # ProjectSettings/ 
+*.log
