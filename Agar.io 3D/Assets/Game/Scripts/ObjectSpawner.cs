@@ -87,4 +87,12 @@ public class ObjectSpawner : MonoBehaviour
 
         return spawnWeights.Length - 1;
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube((firstBorder.position + secondBorder.position) / 2f,
+                        new Vector3(Mathf.Abs(firstBorder.position.x - secondBorder.position.x),
+                                    Mathf.Abs(firstBorder.position.y - secondBorder.position.y),
+                                    Mathf.Abs(firstBorder.position.z - secondBorder.position.z)));
+    }
 }

@@ -1,16 +1,10 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(CharacterStats))]
 public class CharacterMove : MonoBehaviour
 {
     private Rigidbody rb;
-    [Header("Character Stats")]
-    [Min(1), SerializeField] private float speed;
-    [Min(1), SerializeField] private float jumpForce;
-
-    [Header("Camera Settings")]
-    [SerializeField] private float rotationSpeed;
-    [SerializeField] private float maxRotationX = 80f;
+    private CharacterStats characterStats;
 
     [Header("Other Settings")]
     [SerializeField] private LayerMask groundLayer;
@@ -19,6 +13,7 @@ public class CharacterMove : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        characterStats = GetComponent<CharacterStats>();
         Cursor.lockState = CursorLockMode.Locked;
     }
     void Update()
@@ -36,13 +31,13 @@ public class CharacterMove : MonoBehaviour
 
         Vector3 moveDirection = Quaternion.Euler(0, transform.eulerAngles.y, 0) * moveInput;
 
-        transform.Translate(speed * Time.deltaTime * moveDirection, Space.World);
+        transform.Translate(characterStats.Speed * Time.deltaTime * moveDirection, Space.World);
     }
     private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
-            rb.AddForce(0f, jumpForce, 0f, ForceMode.Impulse);
+            rb.AddForce(0f, characterStats.JumpForce, 0f, ForceMode.Impulse);
         }
     }
     private bool IsGrounded()
