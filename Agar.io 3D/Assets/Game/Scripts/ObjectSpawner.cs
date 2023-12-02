@@ -50,7 +50,7 @@ public class ObjectSpawner : MonoBehaviour
             randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
 
             randomIndex = GetWeightedRandomIndex();
-            obj = Instantiate(spawnObjects[randomIndex], new Vector3(randomX, 0, randomZ), Quaternion.identity);
+            obj = Instantiate(spawnObjects[randomIndex], new Vector3(randomX, firstBorder.position.y, randomZ), Quaternion.identity);
 
             obj.transform.SetParent(map);
             ObjectsInMap++;
