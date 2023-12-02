@@ -5,9 +5,20 @@ public class ObjectSpawner : MonoBehaviour
 {
     [Header("Map settings")]
     [Min(0), SerializeField] private int objectsInMap;
-    public int ObjectsInMap { get => objectsInMap; private set { objectsInMap = value; } }
+    public int ObjectsInMap
+    {
+        get => objectsInMap;
+        private set
+        {
+            objectsInMap = value;
+            if(objectsInMap > maxObjectsInMap)
+            {
+                objectsInMap = maxObjectsInMap;
+            }
+        }
+    }
     [Min(0), SerializeField] private int maxObjectsInMap;
-    public int MaxObjectsInMap { get => maxObjectsInMap; private set { if (maxObjectsInMap > 100) maxObjectsInMap = 100; } }
+    public int MaxObjectsInMap { get => maxObjectsInMap; private set { } }
 
     [Space(15), SerializeField] private GameObject[] spawnObjects;
     [Tooltip("The chance of spawning an object from the SpawnObjects array. Specify values for each element")]
@@ -20,7 +31,6 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] private Transform map;
 
     #region Unity Methods: Awake, Start, etc...
-    private void Awake() => Init();
     private void Start()
     {
         SpawnObjects();
@@ -28,24 +38,20 @@ public class ObjectSpawner : MonoBehaviour
     }
     private void OnDestroy() => StopAllCoroutines();
     #endregion
-    private void Init()
-    {
-
-    }
-
     private void SpawnObjects()
     {
         int randomIndex;
         float randomX;
-        float randomY;
+        float randomZ;
         GameObject obj;
         while (ObjectsInMap < MaxObjectsInMap)
         {
             randomX = Mathf.Lerp(firstBorder.position.x, secondBorder.position.x, Random.value);
-            randomY = Mathf.Lerp(firstBorder.position.y, secondBorder.position.y, Random.value);
+            randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
 
             randomIndex = GetWeightedRandomIndex();
-            obj = Instantiate(spawnObjects[randomIndex], new Vector2(randomX, randomY), Quaternion.identity);
+            obj = Instantiate(spawnObjects[randomIndex], new Vector3(randomX, 0, randomZ), Quaternion.identity);
+
             obj.transform.SetParent(map);
             ObjectsInMap++;
         }
@@ -79,7 +85,6 @@ public class ObjectSpawner : MonoBehaviour
             randomValue -= spawnWeights[i];
         }
 
-        // Âåðíóòü ïîñëåäíèé èíäåêñ, åñëè ÷òî-òî ïîøëî íå òàê
         return spawnWeights.Length - 1;
     }
 }
