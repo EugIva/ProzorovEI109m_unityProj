@@ -24,18 +24,34 @@ public class CharacterMove : MonoBehaviour
 
     void HandleMovement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        //float X = Input.GetAxis("Horizontal");
+        //float Y = Input.GetAxis("Vertical");
 
-        Vector3 moveInput = new(horizontalInput, 0, verticalInput);
+        //Vector3 moveInput = new(X, 0, Y);
 
-        Vector3 moveDirection = Quaternion.Euler(0, transform.eulerAngles.y, 0) * moveInput;
+        //Vector3 moveDirection = Quaternion.Euler(0, transform.eulerAngles.y, 0) * moveInput;
 
-        transform.Translate(characterStats.Speed * Time.deltaTime * moveDirection, Space.World);
+        //transform.Translate(characterStats.Speed * Time.deltaTime * moveDirection, Space.World);
+
+        float X = Input.GetAxis("Horizontal");
+        float Y = Input.GetAxis("Vertical");
+
+        Vector3 moveInput = new Vector3(X, 0, Y);
+
+        Vector3 moveDirection = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * moveInput;
+        // ѕровер€ем текущую скорость персонажа
+        float currentSpeed = rb.velocity.magnitude;
+
+        // ≈сли текуща€ скорость меньше максимальной скорости, примен€ем силу
+        if (currentSpeed < characterStats.MaxSpeed)
+        {
+            // »спользуем метод AddForce дл€ применени€ силы
+            rb.AddForce(moveDirection * characterStats.Speed);
+        }
     }
     private void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space) )
         {
             rb.AddForce(0f, characterStats.JumpForce, 0f, ForceMode.Impulse);
         }
