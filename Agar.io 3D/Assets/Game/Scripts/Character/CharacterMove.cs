@@ -5,6 +5,7 @@ public class CharacterMove : MonoBehaviour
 {
     private Rigidbody rb;
     private CharacterStats characterStats;
+    private new Transform camera;
 
     [Header("Other Settings")]
     [SerializeField] private LayerMask groundLayer;
@@ -14,6 +15,7 @@ public class CharacterMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         characterStats = GetComponent<CharacterStats>();
+        camera = FindObjectOfType<Camera>().transform;
         Cursor.lockState = CursorLockMode.Locked;
     }
     void Update()
@@ -24,6 +26,7 @@ public class CharacterMove : MonoBehaviour
 
     void HandleMovement()
     {
+        //None physic
         //float X = Input.GetAxis("Horizontal");
         //float Y = Input.GetAxis("Vertical");
 
@@ -36,16 +39,13 @@ public class CharacterMove : MonoBehaviour
         float X = Input.GetAxis("Horizontal");
         float Y = Input.GetAxis("Vertical");
 
-        Vector3 moveInput = new Vector3(X, 0, Y);
+        Vector3 moveInput = new(X, 0, Y);
 
-        Vector3 moveDirection = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * moveInput;
-        // ѕровер€ем текущую скорость персонажа
+        Vector3 moveDirection = Quaternion.Euler(0, camera.eulerAngles.y, 0) * moveInput;
         float currentSpeed = rb.velocity.magnitude;
 
-        // ≈сли текуща€ скорость меньше максимальной скорости, примен€ем силу
         if (currentSpeed < characterStats.MaxSpeed)
         {
-            // »спользуем метод AddForce дл€ применени€ силы
             rb.AddForce(moveDirection * characterStats.Speed);
         }
     }
