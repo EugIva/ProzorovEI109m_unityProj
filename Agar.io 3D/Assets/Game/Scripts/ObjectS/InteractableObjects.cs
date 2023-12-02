@@ -2,47 +2,50 @@ using UnityEngine;
 
 public class InteractableObjects : MonoBehaviour
 {
-    private enum objectType
+    private enum ObjectType
     {
         none,
         greed_cube,
         red_cube,
         yellow_cube,
     }
-    [SerializeField] private objectType type;
-    [Min(0), SerializeField] private ushort reward;
+    [SerializeField] private ObjectType type;
+    [Range(0, 2), SerializeField] private ushort reward;
+    [Range(0, 60), SerializeField] private byte durationInSeconds;
 
     private void OnTriggerEnter(Collider other)
     {
         CharacterStats character = CharacterStats.Instance;
-        if(other.TryGetComponent(out InteractableObjects _object))
-        {
-            Destroy(gameObject);
-            print("LOL");
-            return;
-        }
+
         switch (type)
         {
-            case objectType.greed_cube:
+            case ObjectType.greed_cube:
                 character.IncreaseMass(reward);
                 break;
 
-            case objectType.red_cube:
+            case ObjectType.red_cube:
                 character.DecreaseMass(reward);
                 break;
 
-            case objectType.yellow_cube:
-                int randomEffect = Random.Range(0, 2);
-                if(randomEffect == 1)
-                {
-                    character.TemporaryChangeSpeed(reward);
-                }
-                else
-                {
-                    character.TemporaryChangeJumpForce(reward);
-                }
+            case ObjectType.yellow_cube:
+                RandomBuff();
                 break;
         }
         Destroy(gameObject);
     }
+    private void RandomBuff()
+    {
+        byte randomEffect = (byte)Random.Range(0, 2);
+        switch (randomEffect)
+        {
+            case 0:
+                CharacterStats.Instance.TemporaryChangeSpeed(durationInSeconds, reward);
+                break;
+
+            case 1:
+                CharacterStats.Instance.TemporaryChangeJumpForce(durationInSeconds, reward);
+                break;
+        }
+    }
+    private void OnDestroy() => ObjectSpawner.Instance.ObjectsInMap--;
 }

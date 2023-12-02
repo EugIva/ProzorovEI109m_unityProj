@@ -3,15 +3,21 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
+    public static ObjectSpawner Instance;
+
     [Header("Map settings")]
     [Min(0), SerializeField] private int objectsInMap;
     public int ObjectsInMap
     {
         get => objectsInMap;
-        private set
+        set
         {
             objectsInMap = value;
-            if(objectsInMap > maxObjectsInMap)
+            if (objectsInMap < 0)
+            {
+                objectsInMap = 0;
+            }
+            if (objectsInMap > maxObjectsInMap)
             {
                 objectsInMap = maxObjectsInMap;
             }
@@ -31,6 +37,15 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] private Transform map;
 
     #region Unity Methods: Awake, Start, etc...
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+            return;
+        }
+        Destroy(gameObject);
+    }
     private void Start()
     {
         SpawnObjects();

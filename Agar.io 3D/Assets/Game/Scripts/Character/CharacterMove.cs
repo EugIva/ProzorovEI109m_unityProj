@@ -10,7 +10,6 @@ public class CharacterMove : MonoBehaviour
     [Header("Other Settings")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 0.1f;
-    private float currentRotationX = 0f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -20,8 +19,11 @@ public class CharacterMove : MonoBehaviour
     }
     void Update()
     {
-        HandleMovement();
         Jump();
+    }
+    private void FixedUpdate()
+    {
+        HandleMovement();
     }
 
     void HandleMovement()

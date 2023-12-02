@@ -6,11 +6,23 @@ public class CharacterStats : MonoBehaviour
 {
     public static CharacterStats Instance;
     private CharacterStats() { }
-    [Min(0), SerializeField] private int mass = 1;
-    public int Mass { get => mass; private set { mass = value; } }
+    [SerializeField] private new Camera camera;
+    [Min(0), SerializeField] private float mass = 1;
+    public float Mass
+    {
+        get => mass;
+        private set
+        {
+            mass = value;
+            if(mass < 0)
+            {
+                mass = 0;
+            }
+        }
+    }
 
-    [Min(0), SerializeField] private int speed = 1;
-    public int Speed { get => speed; private set { speed = value; } }
+    [Min(0), SerializeField] private float speed = 1;
+    public float Speed { get => speed; private set { speed = value; } }
 
     [Min(0)] private int maxSpeed = 5;
     public int MaxSpeed { get => maxSpeed; private set { maxSpeed = value; } }
@@ -28,41 +40,60 @@ public class CharacterStats : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void IncreaseMass(ushort value)
+    public void IncreaseMass(float value)
     {
         Mass += value;
-        transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+        transform.localScale += new Vector3(value / 100, value / 100, value / 100);
+        camera.fieldOfView += value / 50;
+        MassCheck();
     }
-    public void DecreaseMass(ushort value)
+    public void DecreaseMass(float value)
     {
         Mass -= value;
-        transform.localScale -= new Vector3(0.02f, 0.02f, 0.02f);
+        transform.localScale -= new Vector3(value / 50, value / 50, value / 50);
+        camera.fieldOfView -= value / 50;
+        MassCheck();
     }
-    public void TemporaryChangeSpeed(ushort value) => StartCoroutine(AddSpeedBuff(5, value));
-    public void TemporaryChangeJumpForce(ushort value) => StartCoroutine(AddJumpForceBuff(5, value));
-
-    private IEnumerator AddJumpForceBuff(byte seconds, ushort value)
+    private void MassCheck()
     {
-        JumpForce += value;
+        switch (Mass)
+        {
+            case >= 30 and <= 50:
+                SetMaxSpeed(5);
+                break;
+
+            case > 50 and <= 70:
+                SetMaxSpeed(4);
+                break;
+
+            default:
+                SetMaxSpeed(0, true);
+                break;
+        }
+    }
+    public void TemporaryChangeSpeed(byte seconds, ushort reward) => StartCoroutine(AddSpeedBuff(seconds, reward));
+    public void TemporaryChangeJumpForce(byte seconds, ushort reward) => StartCoroutine(AddJumpForceBuff(seconds, reward));
+
+    private IEnumerator AddJumpForceBuff(byte seconds, float reward)
+    {
+        JumpForce += reward / 2;
         while (seconds > 0)
         {
             yield return new WaitForSeconds(1);
             seconds--;
-            Debug.Log("Time left: " + seconds);
         }
-        JumpForce -= value;
+        JumpForce -= reward / 2;
         yield break;
     }
-    private IEnumerator AddSpeedBuff(byte seconds, ushort value)
+    private IEnumerator AddSpeedBuff(byte seconds, float reward)
     {
-        Speed += value;
+        Speed += reward / 3;
         while (seconds > 0)
         {
             yield return new WaitForSeconds(1);
             seconds--;
-            Debug.Log("Time left: " + seconds);
         }
-        Speed -= value;
+        Speed -= reward / 3;
         yield break;
     }
 
@@ -71,7 +102,7 @@ public class CharacterStats : MonoBehaviour
     {
         if (baseValue)
         {
-            MaxSpeed = 5;
+            MaxSpeed = 6;
             return;
         }
         MaxSpeed = value;
