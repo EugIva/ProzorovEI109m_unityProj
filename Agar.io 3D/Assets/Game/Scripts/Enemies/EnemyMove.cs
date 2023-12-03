@@ -10,7 +10,9 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] private LayerMask layer;
     private Rigidbody rb;
     private EnemyStats botStats;
+
     public bool busy;
+    public bool foundEnemy;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -19,66 +21,96 @@ public class EnemyMove : MonoBehaviour
     private void Start() => RandomMove();
     private void FixedUpdate()
     {
-        BotAI();
-        CheckDistanceAndReset();
-    }
-    private void BotAI()
-    {
-        if(currentObject == null && IsBusy())
+        CreatePhysicsCircle();
+        if (foundEnemy)
         {
+            EvaluateEnemy();
             return;
         }
+        LootObjects();
+    }
+    private void EvaluateEnemy()
+    {
+        //Move to object
+        if (currentObject != null)
+        {
+            float currentObjectMass = GetObjectMass(currentObject);
+
+            float distance = Vector3.Distance(transform.position, currentObject.transform.position);
+            float step = speed * Time.fixedDeltaTime;
+
+            if (currentObjectMass < botStats.Mass)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, currentObject.transform.position, step);
+
+                if (distance >= FOV)
+                {
+                    MissingObject();
+                }
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards 
+                    (transform.position, transform.position - 
+                    (currentObject.transform.position - transform.position), step);
+
+                if(distance >= FOV * 2)
+                {
+                    MissingObject();
+                }
+            }
+        }
+    }
+    private void LootObjects()
+    {
+        if (currentObject != null)
+        {
+            float distance = Vector3.Distance(transform.position, currentObject.transform.position);
+            var pos = Vector3.Lerp(transform.position, currentObject.transform.position, Time.fixedDeltaTime * speed / distance);
+            transform.position = new Vector3(pos.x, pos.y, 0);
+        }
+    }
+    private void MissingObject()
+    {
+        currentObject = null;
+        foundEnemy = false;
+        busy = false;
+    }
+    private float GetObjectMass(Transform currentObject)
+    {
+        if(currentObject.TryGetComponent(out CharacterStats character))
+        {
+            print(character.Mass);
+            return character.Mass;
+        }
+        else if(currentObject.TryGetComponent(out EnemyStats enemy))
+        {
+            print(enemy.Mass);
+            return enemy.Mass;
+        }
+        return 0;
+    }
+    private void CreatePhysicsCircle()
+    {
         Collider[] colliders = Physics.OverlapSphere(transform.position, FOV, layer);
         foreach (var collider in colliders)
         {
+            //Find Enemy
             if (collider.gameObject != gameObject)
             {
                 currentObject = collider.transform;
+                busy = true;
+                foundEnemy = true;
+                return;
             }
-            if(currentObject != null)
+            //Find items
+            if(!foundEnemy && currentObject == null && collider.gameObject != gameObject)
             {
-                if(currentObject.TryGetComponent(out CharacterStats _))
-                {
-                    CharacterLogic();
-                    continue;
-                }
-                else
-                {
-                    OtherBotsLogic();
-                    continue;
-                }
+                currentObject = collider.transform;
+                busy = true;
+                return;
             }
         }
-        //Collider[] colliders = Physics.OverlapSphere(transform.position, FOV);
-
-        //foreach (Collider collider in colliders)
-        //{
-        //    print("Checking collider");
-        //    if (collider.gameObject != gameObject && collider.CompareTag("target"))
-        //    {
-        //        print("Collider is a target");
-        //        currentObject = collider.transform;
-
-        //        if (currentObject != null)
-        //        {
-        //            print("Current object is not null");
-        //            if (currentObject.TryGetComponent(out CharacterStats _))
-        //            {
-        //                print("CharacterStats found");
-        //                CharacterLogic();
-        //            }
-        //            else
-        //            {
-        //                print("No CharacterStats, running OtherBotsLogic");
-        //                OtherBotsLogic();
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        currentObject = null;
-        //    }
-        //}
     }
     private void CheckDistanceAndReset()
     {
@@ -91,36 +123,6 @@ public class EnemyMove : MonoBehaviour
                 currentObject = null;
                 busy = false;
             }
-        }
-    }
-    private void CharacterLogic()
-    {
-        busy = true;
-        var charater = currentObject.GetComponent<CharacterStats>();
-        if (charater.Mass >= botStats.Mass && !IsBusy())
-        {
-            print("RunAway");
-            RunAway(currentObject);
-        }
-        else if (charater.Mass < botStats.Mass && !IsBusy())
-        {
-            print("MoveToEnemy");
-            MoveToEnemy();
-        }
-    }
-    private void OtherBotsLogic()
-    {
-        busy = true;
-        var otherBot = currentObject.GetComponent<EnemyStats>();
-        if (otherBot.Mass >= botStats.Mass && !IsBusy())
-        {
-            print("RunAway");
-            RunAway(currentObject);
-        }
-        else if ( otherBot.Mass < botStats.Mass && !IsBusy())
-        {
-            print("MoveToEnemy");
-            MoveToEnemy();
         }
     }
     private void RandomMove() => StartCoroutine(RandomMoveStart());
@@ -142,7 +144,6 @@ public class EnemyMove : MonoBehaviour
     private void RunAway(Transform target) => StartCoroutine(RunAwayStart(target));
     private IEnumerator RunAwayStart(Transform target)
     {
-        busy = true;
         while (Vector3.Distance(transform.position, target.position) >= FOV)
         {
             Vector3 runDirection = transform.position - target.position;
@@ -151,7 +152,6 @@ public class EnemyMove : MonoBehaviour
             rb.AddForce(speed * runDirection);
         }
         yield return new WaitForSeconds(1f);
-        print("TEST");
         rb.velocity = Vector3.zero;
         busy = false;
     }
