@@ -47,5 +47,11 @@ public class InteractableObjects : MonoBehaviour
                 break;
         }
     }
-    private void OnDestroy() => ObjectSpawner.Instance.ObjectsInMap--;
+    private void OnDestroy()
+    {
+        if(gameObject != null)
+        {
+            ObjectSpawner.Instance.ObjectsInMap--;
+        }
+    }
 }

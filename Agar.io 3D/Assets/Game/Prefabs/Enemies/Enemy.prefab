@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 5516894490740525378}
   - component: {fileID: 5516894490740525377}
   - component: {fileID: 5516894490740525376}
+  - component: {fileID: 5791804835130247057}
   - component: {fileID: 5516894490740525379}
   - component: {fileID: 5516894490740525381}
   - component: {fileID: 5516894490740525380}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +87,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5791804835130247057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5516894490740525387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 072b812904893e64486e2ea1113c01a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 1
 --- !u!114 &5516894490740525379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,8 +112,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 157df87d94d5b014f85216f037f36767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentObject: {fileID: 0}
   speed: 1
   FOV: 4
+  layer:
+    serializedVersion: 2
+    m_Bits: 128
+  busy: 0
 --- !u!135 &5516894490740525381
 SphereCollider:
   m_ObjectHideFlags: 0
