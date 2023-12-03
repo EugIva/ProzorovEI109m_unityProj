@@ -891,6 +891,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4155b0b626fc8224f85c1f47cd695a4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesInMap: 0
+  maxEnemiesInMap: 5
+  EnemyPrefab:
+  - {fileID: 5516894490740525387, guid: 231b33af55993cf419a46fa898ba8cfe, type: 3}
+  firstBorder: {fileID: 721617312}
+  secondBorder: {fileID: 1030504516}
+  enemiesObj: {fileID: 1525873663}
 --- !u!1 &1505415081
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +956,7 @@ MonoBehaviour:
   - 10
   firstBorder: {fileID: 721617312}
   secondBorder: {fileID: 1030504516}
-  map: {fileID: 421095364}
+  mapObj: {fileID: 421095364}
 --- !u!1 &1525873662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,7 +1128,7 @@ GameObject:
   - component: {fileID: 2025548336}
   - component: {fileID: 2025548332}
   - component: {fileID: 2025548337}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -23,6 +23,7 @@ public class ObjectSpawner : MonoBehaviour
             }
         }
     }
+
     [Min(0), SerializeField] private int maxObjectsInMap;
     public int MaxObjectsInMap { get => maxObjectsInMap; private set { } }
 
@@ -34,7 +35,7 @@ public class ObjectSpawner : MonoBehaviour
 
     [Header("Other")]
     [Tooltip("All the objects that appear will be inside the map")]
-    [SerializeField] private Transform map;
+    [SerializeField] private Transform mapObj;
 
     #region Unity Methods: Awake, Start, etc...
     private void Awake()
@@ -67,7 +68,7 @@ public class ObjectSpawner : MonoBehaviour
             randomIndex = GetWeightedRandomIndex();
             obj = Instantiate(spawnObjects[randomIndex], new Vector3(randomX, firstBorder.position.y, randomZ), Quaternion.identity);
 
-            obj.transform.SetParent(map);
+            obj.transform.SetParent(mapObj);
             ObjectsInMap++;
         }
     }
