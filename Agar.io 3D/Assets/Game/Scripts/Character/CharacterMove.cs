@@ -47,15 +47,22 @@ public class CharacterMove : MonoBehaviour
 
         moveDirection = Vector3.Scale(moveDirection, transform.localScale);
 
-        float currentSpeed = rb.velocity.magnitude;
+        //float currentSpeed = rb.velocity.magnitude;
 
-        float lerpFactor = 0.1f;
+        float lerpFactor = 0.04f;
         if (moveInput.magnitude > 0.1f)
         {
-            if(currentSpeed < characterStats.MaxSpeed)
-            {
-                rb.AddForce(moveDirection * characterStats.Speed);
-            }
+            //if(currentSpeed < characterStats.MaxRigidbodySpeed)
+            //{
+
+            //}
+            //rb.AddForce(moveDirection * characterStats.Speed);
+            Vector3 targetVelocity = moveDirection * characterStats.Speed;
+            rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, lerpFactor);
+            //else
+            //{
+            //    rb.velocity = moveDirection * characterStats.MaxRigidbodySpeed;
+            //}
         }
         else
         {
@@ -64,7 +71,7 @@ public class CharacterMove : MonoBehaviour
     }
     private void Jump()
     {
-        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space) )
+        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(0f, characterStats.JumpForce, 0f, ForceMode.Impulse);
         }

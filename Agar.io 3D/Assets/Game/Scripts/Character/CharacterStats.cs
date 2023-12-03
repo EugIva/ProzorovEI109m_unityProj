@@ -24,8 +24,8 @@ public class CharacterStats : MonoBehaviour
     [Min(0), SerializeField] private float speed = 1;
     public float Speed { get => speed; private set { speed = value; } }
 
-    [Min(0)] private int maxSpeed = 5;
-    public int MaxSpeed { get => maxSpeed; private set { maxSpeed = value; } }
+    //[Min(0)] private int maxRigidbodySpeed = 20;
+    //public int MaxRigidbodySpeed { get => maxRigidbodySpeed; private set { maxRigidbodySpeed = value; } }
 
     [Min(0), SerializeField] private float jumpForce = 1;
     public float JumpForce { get => jumpForce; private set { jumpForce = value; } }
@@ -60,21 +60,17 @@ public class CharacterStats : MonoBehaviour
         switch (Mass)
         {
             case >= 30 and <= 50:
-                SetMaxSpeed(5);
                 characterMove.groundCheckDistance = 0.6f;
                 break;
 
             case > 50 and <= 70:
-                SetMaxSpeed(4);
                 break;
 
             case > 70 and <= 100:
-                SetMaxSpeed(4);
                 characterMove.groundCheckDistance = 0.9f;
                 break;
 
             default:
-                SetMaxSpeed(0, true);
                 characterMove.groundCheckDistance = 0.4f;
                 break;
         }
@@ -103,16 +99,5 @@ public class CharacterStats : MonoBehaviour
         }
         Speed -= reward / 3;
         yield break;
-    }
-
-    /// <param name="baseValue">Set MaxSpeed to base value: 5</param>
-    private void SetMaxSpeed(byte value, bool baseValue = false)
-    {
-        if (baseValue)
-        {
-            MaxSpeed = 6;
-            return;
-        }
-        MaxSpeed = value;
     }
 }
