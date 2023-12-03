@@ -6,7 +6,7 @@ public class ObjectSpawner : MonoBehaviour
     public static ObjectSpawner Instance;
 
     [Header("Map settings")]
-    [Min(0), SerializeField] private int objectsInMap;
+    private int objectsInMap;
     public int ObjectsInMap
     {
         get => objectsInMap;
@@ -27,15 +27,12 @@ public class ObjectSpawner : MonoBehaviour
     [Min(0), SerializeField] private int maxObjectsInMap;
     public int MaxObjectsInMap { get => maxObjectsInMap; private set { } }
 
-    [Space(15), SerializeField] private GameObject[] spawnObjects;
+    [Space(15), SerializeField] private GameObject[] objectsPrefab;
     [Tooltip("The chance of spawning an object from the SpawnObjects array. Specify values for each element")]
     [SerializeField] private float[] spawnWeights;
     [Space(15), SerializeField] private Transform firstBorder;
     [SerializeField] private Transform secondBorder;
 
-    [Header("Other")]
-    [Tooltip("All the objects that appear will be inside the map")]
-    [SerializeField] private Transform mapObj;
 
     #region Unity Methods: Awake, Start, etc...
     private void Awake()
@@ -66,9 +63,9 @@ public class ObjectSpawner : MonoBehaviour
             randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
 
             randomIndex = GetWeightedRandomIndex();
-            obj = Instantiate(spawnObjects[randomIndex], new Vector3(randomX, firstBorder.position.y, randomZ), Quaternion.identity);
+            obj = Instantiate(objectsPrefab[randomIndex], new Vector3(randomX, firstBorder.position.y, randomZ), Quaternion.identity);
 
-            obj.transform.SetParent(mapObj);
+            obj.transform.SetParent(transform);
             ObjectsInMap++;
         }
     }
@@ -103,12 +100,14 @@ public class ObjectSpawner : MonoBehaviour
 
         return spawnWeights.Length - 1;
     }
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireCube((firstBorder.position + secondBorder.position) / 2f,
                         new Vector3(Mathf.Abs(firstBorder.position.x - secondBorder.position.x),
                                     Mathf.Abs(firstBorder.position.y - secondBorder.position.y),
                                     Mathf.Abs(firstBorder.position.z - secondBorder.position.z)));
     }
+#endif
 }

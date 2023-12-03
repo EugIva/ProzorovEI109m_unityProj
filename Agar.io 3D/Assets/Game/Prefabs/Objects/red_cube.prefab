@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 389934290449498650}
   - component: {fileID: 389934290449498651}
   - component: {fileID: -1418535072251203179}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: red_cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,5 +111,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  reward: 1
+  reward: 2
   durationInSeconds: 0

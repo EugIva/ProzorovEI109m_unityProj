@@ -11,12 +11,12 @@ public class CharacterStats : MonoBehaviour
     public float Mass
     {
         get => mass;
-        private set
+        set
         {
             mass = value;
-            if(mass < 0)
+            if(mass <= 0)
             {
-                mass = 0;
+                //Respawn logic
             }
         }
     }

@@ -5,7 +5,7 @@ public class InteractableObjects : MonoBehaviour
     private enum ObjectType
     {
         none,
-        greed_cube,
+        green_cube,
         red_cube,
         yellow_cube,
     }
@@ -16,10 +16,37 @@ public class InteractableObjects : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         CharacterStats character = CharacterStats.Instance;
-
+        other.TryGetComponent(out EnemyStats enemy);
+        if(enemy != null)
+        {
+            EnemyAdded(enemy);
+            return;
+        }
+        CharacterAdded(character);
+    }
+    private void EnemyAdded(EnemyStats enemy)
+    {
         switch (type)
         {
-            case ObjectType.greed_cube:
+            case ObjectType.green_cube:
+                enemy.IncreaseMass(reward);
+                break;
+
+            case ObjectType.red_cube:
+                enemy.DecreaseMass(reward);
+                break;
+
+            case ObjectType.yellow_cube:
+                RandomBuff(enemy);
+                break;
+        }
+        Destroy(gameObject);
+    }
+    private void CharacterAdded(CharacterStats character)
+    {
+        switch (type)
+        {
+            case ObjectType.green_cube:
                 character.IncreaseMass(reward);
                 break;
 
@@ -28,30 +55,33 @@ public class InteractableObjects : MonoBehaviour
                 break;
 
             case ObjectType.yellow_cube:
-                RandomBuff();
+                RandomBuff(character);
                 break;
         }
         Destroy(gameObject);
     }
-    private void RandomBuff()
+    private void RandomBuff<T>(T type)
     {
-        byte randomEffect = (byte)Random.Range(0, 2);
-        switch (randomEffect)
+        switch (type)
         {
-            case 0:
-                CharacterStats.Instance.TemporaryChangeSpeed(durationInSeconds, reward);
+            case EnemyStats enemy:
+                enemy.TemporaryChangeSpeed(durationInSeconds, reward);
                 break;
 
-            case 1:
-                CharacterStats.Instance.TemporaryChangeJumpForce(durationInSeconds, reward);
+            case CharacterStats character:
+                byte randomEffect = (byte)Random.Range(0, 2);
+                switch (randomEffect)
+                {
+                    case 0:
+                        character.TemporaryChangeSpeed(durationInSeconds, reward);
+                        break;
+
+                    case 1:
+                        character.TemporaryChangeJumpForce(durationInSeconds, reward);
+                        break;
+                }
                 break;
         }
     }
-    private void OnDestroy()
-    {
-        if(gameObject != null)
-        {
-            ObjectSpawner.Instance.ObjectsInMap--;
-        }
-    }
+    private void OnDestroy() => ObjectSpawner.Instance.ObjectsInMap--;
 }
