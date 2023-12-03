@@ -43,31 +43,39 @@ public class CharacterStats : MonoBehaviour
     public void IncreaseMass(float value)
     {
         Mass += value;
-        transform.localScale += new Vector3(value / 100, value / 100, value / 100);
-        camera.fieldOfView += value / 50;
+        transform.localScale += new Vector3(value, value, value) / 100;
+        camera.fieldOfView += value / 25;
         MassCheck();
     }
     public void DecreaseMass(float value)
     {
         Mass -= value;
-        transform.localScale -= new Vector3(value / 50, value / 50, value / 50);
-        camera.fieldOfView -= value / 50;
+        transform.localScale -= new Vector3(value, value, value) / 50;
+        camera.fieldOfView -= value / 25;
         MassCheck();
     }
     private void MassCheck()
     {
+        var characterMove = GetComponent<CharacterMove>();
         switch (Mass)
         {
             case >= 30 and <= 50:
                 SetMaxSpeed(5);
+                characterMove.groundCheckDistance = 0.6f;
                 break;
 
             case > 50 and <= 70:
                 SetMaxSpeed(4);
                 break;
 
+            case > 70 and <= 100:
+                SetMaxSpeed(4);
+                characterMove.groundCheckDistance = 0.9f;
+                break;
+
             default:
                 SetMaxSpeed(0, true);
+                characterMove.groundCheckDistance = 0.4f;
                 break;
         }
     }
@@ -98,7 +106,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     /// <param name="baseValue">Set MaxSpeed to base value: 5</param>
-    public void SetMaxSpeed(byte value, bool baseValue = false)
+    private void SetMaxSpeed(byte value, bool baseValue = false)
     {
         if (baseValue)
         {

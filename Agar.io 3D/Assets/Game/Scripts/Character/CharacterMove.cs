@@ -9,7 +9,7 @@ public class CharacterMove : MonoBehaviour
 
     [Header("Other Settings")]
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float groundCheckDistance = 0.1f;
+    [SerializeField] internal float groundCheckDistance = 0.1f;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -44,11 +44,22 @@ public class CharacterMove : MonoBehaviour
         Vector3 moveInput = new(X, 0, Y);
 
         Vector3 moveDirection = Quaternion.Euler(0, camera.eulerAngles.y, 0) * moveInput;
+
+        moveDirection = Vector3.Scale(moveDirection, transform.localScale);
+
         float currentSpeed = rb.velocity.magnitude;
 
-        if (currentSpeed < characterStats.MaxSpeed)
+        float lerpFactor = 0.1f;
+        if (moveInput.magnitude > 0.1f)
         {
-            rb.AddForce(moveDirection * characterStats.Speed);
+            if(currentSpeed < characterStats.MaxSpeed)
+            {
+                rb.AddForce(moveDirection * characterStats.Speed);
+            }
+        }
+        else
+        {
+            rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, lerpFactor);
         }
     }
     private void Jump()
