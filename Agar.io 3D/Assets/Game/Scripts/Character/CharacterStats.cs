@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -99,5 +98,19 @@ public class CharacterStats : MonoBehaviour
         }
         Speed -= reward / 3;
         yield break;
+    }
+    public void RandomBuff(byte effectDuration, ushort reward)
+    {
+        byte randomEffect = (byte)Random.Range(0, 2);
+        switch (randomEffect)
+        {
+            case 0:
+                TemporaryChangeSpeed(effectDuration, reward);
+                break;
+
+            case 1:
+                TemporaryChangeJumpForce(effectDuration, reward);
+                break;
+        }
     }
 }

@@ -11,7 +11,7 @@ public class InteractableObjects : MonoBehaviour
     }
     [SerializeField] private ObjectType type;
     [Range(0, 2), SerializeField] private ushort reward;
-    [Range(0, 60), SerializeField] private byte durationInSeconds;
+    [Range(0, 60), SerializeField] private byte effectDuration;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,7 +37,7 @@ public class InteractableObjects : MonoBehaviour
                 break;
 
             case ObjectType.yellow_cube:
-                RandomBuff(enemy);
+                enemy.RandomBuff(effectDuration, reward);
                 break;
         }
         Destroy(gameObject);
@@ -55,33 +55,11 @@ public class InteractableObjects : MonoBehaviour
                 break;
 
             case ObjectType.yellow_cube:
-                RandomBuff(character);
+                character.RandomBuff(effectDuration, reward);
                 break;
         }
         Destroy(gameObject);
     }
-    private void RandomBuff<T>(T type)
-    {
-        switch (type)
-        {
-            case EnemyStats enemy:
-                enemy.TemporaryChangeSpeed(durationInSeconds, reward);
-                break;
 
-            case CharacterStats character:
-                byte randomEffect = (byte)Random.Range(0, 2);
-                switch (randomEffect)
-                {
-                    case 0:
-                        character.TemporaryChangeSpeed(durationInSeconds, reward);
-                        break;
-
-                    case 1:
-                        character.TemporaryChangeJumpForce(durationInSeconds, reward);
-                        break;
-                }
-                break;
-        }
-    }
-    private void OnDestroy() => ObjectSpawner.Instance.ObjectsInMap--;
+    private void OnDisable() => ObjectSpawner.Instance.ObjectsInMap--;
 }

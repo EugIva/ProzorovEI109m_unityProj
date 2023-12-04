@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
 
     [Tooltip("time in seconds")]
     [SerializeField] private int initialTime = 60;
+    private bool colorChanged;
 
     public void ExecuteTimer() => StartCoroutine(StartTimer(initialTime));
     IEnumerator StartTimer(int seconds)
@@ -28,5 +29,10 @@ public class Timer : MonoBehaviour
         int minutes = seconds / 60;
         int remainingSeconds = seconds % 60;
         timerText.text = string.Format("{0:00}:{1:00}", minutes, remainingSeconds);
+        if (seconds < 15 && !colorChanged)
+        {
+            colorChanged = true;
+            timerText.color = Color.red;
+        }
     }
 }

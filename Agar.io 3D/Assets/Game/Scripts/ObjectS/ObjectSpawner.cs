@@ -4,6 +4,7 @@ using UnityEngine;
 public class ObjectSpawner : MonoBehaviour
 {
     public static ObjectSpawner Instance;
+    private ObjectSpawner() { }
 
     [Header("Map settings")]
     private int objectsInMap;
@@ -33,11 +34,14 @@ public class ObjectSpawner : MonoBehaviour
     [Space(15), SerializeField] private Transform firstBorder;
     [SerializeField] private Transform secondBorder;
 
+    [SerializeField] private Terrain terrain;
+    [Tooltip("Recomended base value = 0.1f")]
+    [Range(0, 1), SerializeField] private float offsetObjects;
 
     #region Unity Methods: Awake, Start, etc...
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             return;
@@ -59,11 +63,21 @@ public class ObjectSpawner : MonoBehaviour
         GameObject obj;
         while (ObjectsInMap < MaxObjectsInMap)
         {
+            //randomX = Mathf.Lerp(firstBorder.position.x, secondBorder.position.x, Random.value);
+            //randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
+
+            //randomIndex = GetWeightedRandomIndex();
+            //obj = Instantiate(objectsPrefab[randomIndex], new Vector3(randomX, firstBorder.position.y, randomZ), Quaternion.identity);
+
+            //obj.transform.SetParent(transform);
+            //ObjectsInMap++;
             randomX = Mathf.Lerp(firstBorder.position.x, secondBorder.position.x, Random.value);
             randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
 
+            float terrainHeight = terrain.SampleHeight(new Vector3(randomX, 0f, randomZ));
+
             randomIndex = GetWeightedRandomIndex();
-            obj = Instantiate(objectsPrefab[randomIndex], new Vector3(randomX, firstBorder.position.y, randomZ), Quaternion.identity);
+            obj = Instantiate(objectsPrefab[randomIndex], new Vector3(randomX, terrainHeight+offsetObjects, randomZ), Quaternion.identity);
 
             obj.transform.SetParent(transform);
             ObjectsInMap++;

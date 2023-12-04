@@ -1,7 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner Instance;
+    private EnemySpawner() { }
     //Need add new enemies + their skins
     [Header("Map settings")]
     private int enemiesInMap;
@@ -24,13 +27,31 @@ public class EnemySpawner : MonoBehaviour
 
     [Min(0), SerializeField] private int maxEnemiesInMap;
     public int MaxEnemiesInMap { get => maxEnemiesInMap; private set { } }
+
+    [Range(0, 30), SerializeField] private int spawnRate;
+
     [Space(15)]public GameObject[] EnemyPrefab;
 
     [Space(15), SerializeField] private Transform firstBorder;
     [SerializeField] private Transform secondBorder;
 
     #region Unity Methods: Awake, Start, etc...
-    private void Start() => SpawnObjects();
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    private void Start()
+    {
+        SpawnObjects();
+        StartCoroutine(PermanentSpawnObjects());
+    }
     private void OnDestroy() => StopAllCoroutines();
     #endregion
 
@@ -49,6 +70,16 @@ public class EnemySpawner : MonoBehaviour
                 obj.transform.SetParent(transform);
             }
             EnemiesInMap++;
+        }
+    }
+    private IEnumerator PermanentSpawnObjects()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.5f);
+            yield return new WaitUntil(() => EnemiesInMap < MaxEnemiesInMap);
+            yield return new WaitForSeconds(spawnRate);
+            SpawnObjects();
         }
     }
 #if UNITY_EDITOR

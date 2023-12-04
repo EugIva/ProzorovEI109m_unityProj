@@ -40,6 +40,7 @@ public class EnemyStats : MonoBehaviour
         }
         Speed *= value;
     }
+
     public void TemporaryChangeSpeed(byte seconds, ushort reward) => StartCoroutine(AddSpeedBuff2(seconds, reward));
 
     private IEnumerator AddSpeedBuff2(byte seconds, float reward)
@@ -62,6 +63,20 @@ public class EnemyStats : MonoBehaviour
     {
         character.Mass += Mass / 5;
         character.transform.localScale += transform.localScale / 5;
+    }
+    public void RandomBuff(byte effectDuration, ushort reward)
+    {
+        byte randomEffect = (byte)Random.Range(0, 2);
+        switch (randomEffect)
+        {
+            case 0:
+                TemporaryChangeSpeed(effectDuration, reward);
+                break;
+
+            case 1:
+                //Other buffs
+                break;
+        }
     }
     private void OnCollisionEnter(Collision other)
     {
@@ -88,4 +103,6 @@ public class EnemyStats : MonoBehaviour
             //Respawn logic
         }
     }
+
+    private void OnDisable() => EnemySpawner.Instance.EnemiesInMap--;
 }
