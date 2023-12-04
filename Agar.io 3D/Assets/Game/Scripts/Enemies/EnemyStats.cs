@@ -100,6 +100,7 @@ public class EnemyStats : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
+            print("LOSE");
             //Respawn logic
         }
     }

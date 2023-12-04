@@ -54,7 +54,7 @@ public class CharacterMove : MonoBehaviour
         {
             //if(currentSpeed < characterStats.MaxRigidbodySpeed)
             //{
-            Vector3 targetVelocity = moveDirection * characterStats.Speed;
+            Vector3 targetVelocity = moveDirection * characterStats.Speed / (characterStats.Mass * 0.01f);
             rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, lerpFactor);
             //}
             //rb.AddForce(moveDirection * characterStats.Speed);

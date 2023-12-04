@@ -48,7 +48,7 @@ public class CharacterStats : MonoBehaviour
     }
     public void DecreaseMass(float value)
     {
-        Mass -= value;
+        Mass -= value * 2;
         transform.localScale -= new Vector3(value, value, value) / 50;
         camera.fieldOfView -= value / 25;
         MassCheck();

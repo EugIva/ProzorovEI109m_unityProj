@@ -40,7 +40,7 @@ public class EnemyMove : MonoBehaviour
             direction.Normalize();
 
             //Attack object
-            if (currentObjectMass < botStats.Mass)
+            if (currentObjectMass <= botStats.Mass)
             {
                 rb.velocity = direction * botStats.Speed;
 
