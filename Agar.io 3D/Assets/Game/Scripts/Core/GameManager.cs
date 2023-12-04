@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Timer timerObject;
     private enum GamemodeType
     {
         none,
@@ -13,7 +14,7 @@ public class GameManager : MonoBehaviour
     {
         if(gamemodeType == GamemodeType.unlimited)
         {
-            GetComponent<Timer>().ExecuteTimer();
+            timerObject.ExecuteTimer();
         }
     }
 }

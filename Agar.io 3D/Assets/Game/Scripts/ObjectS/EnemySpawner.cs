@@ -35,6 +35,11 @@ public class EnemySpawner : MonoBehaviour
     [Space(15), SerializeField] private Transform firstBorder;
     [SerializeField] private Transform secondBorder;
 
+    [Header("Terrain Settings")]
+    [SerializeField] private Terrain terrain;
+    [Tooltip("Recomended base value = 0.1f")]
+    [Range(0, 1), SerializeField] private float offsetEnemies = 0.1f;
+
     #region Unity Methods: Awake, Start, etc...
     private void Awake()
     {
@@ -59,17 +64,21 @@ public class EnemySpawner : MonoBehaviour
     {
         float randomX;
         float randomZ;
+        float terrainHeight;
         GameObject obj;
         while(EnemiesInMap < MaxEnemiesInMap)
         {
             randomX = Mathf.Lerp(firstBorder.position.x, secondBorder.position.x, Random.value);
             randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
+
+            terrainHeight = terrain.SampleHeight(new Vector3(randomX, 0f, randomZ));
+
             for (int i = 0; i < EnemyPrefab.Length; i++)
             {
-                obj = Instantiate(EnemyPrefab[i], new Vector3(randomX, firstBorder.position.y, randomZ), Quaternion.identity);
+                obj = Instantiate(EnemyPrefab[i], new Vector3(randomX, terrainHeight + offsetEnemies, randomZ), Quaternion.identity);
                 obj.transform.SetParent(transform);
+                EnemiesInMap++;
             }
-            EnemiesInMap++;
         }
     }
     private IEnumerator PermanentSpawnObjects()

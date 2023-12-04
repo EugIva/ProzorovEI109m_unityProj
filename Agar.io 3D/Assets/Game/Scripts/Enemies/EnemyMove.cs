@@ -58,7 +58,7 @@ public class EnemyMove : MonoBehaviour
                     botStats.ChangeSpeed(0.9f);
                 }
                 Vector3 awayDirection = -direction.normalized;
-                rb.velocity = awayDirection * botStats.Speed;
+                rb.velocity = new Vector3(awayDirection.x, 0, awayDirection.z) * botStats.Speed;
 
                 if (distance >= FOV * 2)
                 {

@@ -34,9 +34,10 @@ public class ObjectSpawner : MonoBehaviour
     [Space(15), SerializeField] private Transform firstBorder;
     [SerializeField] private Transform secondBorder;
 
+    [Header("Terrain Settings")]
     [SerializeField] private Terrain terrain;
-    [Tooltip("Recomended base value = 0.1f")]
-    [Range(0, 1), SerializeField] private float offsetObjects;
+    [Tooltip("Recomended base value = 0.05f")]
+    [Range(0, 1), SerializeField] private float offsetObjects = 0.05f;
 
     #region Unity Methods: Awake, Start, etc...
     private void Awake()
@@ -60,9 +61,11 @@ public class ObjectSpawner : MonoBehaviour
         int randomIndex;
         float randomX;
         float randomZ;
+        float terrainHeight;
         GameObject obj;
         while (ObjectsInMap < MaxObjectsInMap)
         {
+            //Old spawn logic
             //randomX = Mathf.Lerp(firstBorder.position.x, secondBorder.position.x, Random.value);
             //randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
 
@@ -71,10 +74,11 @@ public class ObjectSpawner : MonoBehaviour
 
             //obj.transform.SetParent(transform);
             //ObjectsInMap++;
+
             randomX = Mathf.Lerp(firstBorder.position.x, secondBorder.position.x, Random.value);
             randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
 
-            float terrainHeight = terrain.SampleHeight(new Vector3(randomX, 0f, randomZ));
+            terrainHeight = terrain.SampleHeight(new Vector3(randomX, 0f, randomZ));
 
             randomIndex = GetWeightedRandomIndex();
             obj = Instantiate(objectsPrefab[randomIndex], new Vector3(randomX, terrainHeight+offsetObjects, randomZ), Quaternion.identity);
