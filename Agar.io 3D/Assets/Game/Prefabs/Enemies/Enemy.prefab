@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mass: 10
   speed: 1
+  enemyMove: {fileID: 5516894490740525379}
 --- !u!114 &5516894490740525379
 MonoBehaviour:
   m_ObjectHideFlags: 0

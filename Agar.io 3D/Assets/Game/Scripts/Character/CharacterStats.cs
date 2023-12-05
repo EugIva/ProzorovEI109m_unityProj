@@ -23,14 +23,18 @@ public class CharacterStats : MonoBehaviour
     [Min(0), SerializeField] private float speed = 1;
     public float Speed { get => speed; private set { speed = value; } }
 
-    //[Min(0)] private int maxRigidbodySpeed = 20;
-    //public int MaxRigidbodySpeed { get => maxRigidbodySpeed; private set { maxRigidbodySpeed = value; } }
-
     [Min(0), SerializeField] private float jumpForce = 1;
     public float JumpForce { get => jumpForce; private set { jumpForce = value; } }
 
+
+    [Tooltip("The lower the coefficient, the higher the speed")]
+    [Min(0.01f), SerializeField] private float speedCoefficient = 0.2f;
+    public float SpeedCoefficient { get => speedCoefficient; private set {} }
+    private CharacterMove charachterMove;
+
     private void Awake()
     {
+        charachterMove = GetComponent<CharacterMove>();
         if (Instance == null)
         {
             Instance = this;
@@ -38,41 +42,26 @@ public class CharacterStats : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
-    public void IncreaseMass(float value)
+    public void UpdateStats(float value , bool increaseMass = false)
     {
-        Mass += value;
-        transform.localScale += new Vector3(value, value, value) / 100;
-        camera.fieldOfView += value / 25;
-        MassCheck();
-    }
-    public void DecreaseMass(float value)
-    {
-        Mass -= value * 2;
-        transform.localScale -= new Vector3(value, value, value) / 50;
-        camera.fieldOfView -= value / 25;
-        MassCheck();
-    }
-    private void MassCheck()
-    {
-        var characterMove = GetComponent<CharacterMove>();
-        switch (Mass)
+        if (increaseMass)
         {
-            case >= 30 and <= 50:
-                characterMove.groundCheckDistance = 0.6f;
-                break;
+            Mass += value;
+            Speed -= value / 1000;
+            charachterMove.groundCheckDistance += value / 200;
 
-            case > 50 and <= 70:
-                break;
+            camera.fieldOfView += value / 25;
 
-            case > 70 and <= 100:
-                characterMove.groundCheckDistance = 0.9f;
-                break;
-
-            default:
-                characterMove.groundCheckDistance = 0.4f;
-                break;
+            transform.localScale += new Vector3(value, value, value) / 100;
+            return;
         }
+        Mass -= value * 2;
+        Speed += value / 500;
+        charachterMove.groundCheckDistance -= value / 100;
+
+        camera.fieldOfView -= value / 12.5f;
+
+        transform.localScale -= new Vector3(value, value, value) / 50;
     }
     public void TemporaryChangeSpeed(byte seconds, ushort reward) => StartCoroutine(AddSpeedBuff(seconds, reward));
     public void TemporaryChangeJumpForce(byte seconds, ushort reward) => StartCoroutine(AddJumpForceBuff(seconds, reward));

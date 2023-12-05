@@ -5,7 +5,7 @@ public class EnemyMove : MonoBehaviour
 {
     [SerializeField] private Transform currentObject;
 
-    [Min(0), SerializeField] private float FOV;
+    [Min(0), SerializeField] internal float FOV;
     [SerializeField] private LayerMask layer;
     private Rigidbody rb;
     private EnemyStats botStats;

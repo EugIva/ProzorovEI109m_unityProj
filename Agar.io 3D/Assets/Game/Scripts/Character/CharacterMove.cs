@@ -10,6 +10,7 @@ public class CharacterMove : MonoBehaviour
     [Header("Other Settings")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] internal float groundCheckDistance = 0.1f;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -17,15 +18,8 @@ public class CharacterMove : MonoBehaviour
         camera = FindObjectOfType<Camera>().transform;
         Cursor.lockState = CursorLockMode.Locked;
     }
-    void Update()
-    {
-        Jump();
-    }
-    private void FixedUpdate()
-    {
-        HandleMovement();
-    }
-
+    void Update() => Jump();
+    private void FixedUpdate() => HandleMovement();
     void HandleMovement()
     {
         //None physic
@@ -47,22 +41,13 @@ public class CharacterMove : MonoBehaviour
 
         moveDirection = Vector3.Scale(moveDirection, transform.localScale);
 
-        //float currentSpeed = rb.velocity.magnitude;
+
 
         float lerpFactor = 0.04f;
         if (moveInput.magnitude > 0.1f)
         {
-            //if(currentSpeed < characterStats.MaxRigidbodySpeed)
-            //{
-            Vector3 targetVelocity = moveDirection * characterStats.Speed / (characterStats.Mass * 0.01f);
+            Vector3 targetVelocity = moveDirection * characterStats.Speed / (characterStats.Mass * characterStats.SpeedCoefficient);
             rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, lerpFactor);
-            //}
-            //rb.AddForce(moveDirection * characterStats.Speed);
-
-            //else
-            //{
-            //    rb.velocity = moveDirection * characterStats.MaxRigidbodySpeed;
-            //}
         }
         else
         {
@@ -80,8 +65,10 @@ public class CharacterMove : MonoBehaviour
     {
         return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
     }
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.yellow);
     }
+#endif
 }

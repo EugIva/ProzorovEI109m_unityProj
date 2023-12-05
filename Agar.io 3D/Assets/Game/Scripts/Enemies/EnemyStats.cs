@@ -21,15 +21,24 @@ public class EnemyStats : MonoBehaviour
     [Min(0), SerializeField] private float speed = 1;
     public float Speed { get => speed; private set { speed = value; } }
 
-    public void IncreaseMass(float value)
+    [SerializeField] private EnemyMove enemyMove;
+
+    public void UpdateStats(float value, bool increaseMass = false)
     {
-        Mass += value;
-        transform.localScale += new Vector3(value, value, value) / 100;
-    }
-    public void DecreaseMass(float value)
-    {
+        if (increaseMass)
+        {
+            Mass += value;
+            speed -= value / 1000;
+
+            transform.localScale += new Vector3(value, value, value) / 100;
+            enemyMove.FOV += value / 500;
+            return;
+        }
         Mass -= value * 2;
+        speed += value / 500;
+
         transform.localScale -= new Vector3(value, value, value) / 50;
+        enemyMove.FOV -= value / 250;
     }
     public void ChangeSpeed(float value, bool baseValue = false)
     {
@@ -56,13 +65,13 @@ public class EnemyStats : MonoBehaviour
     }
     private void GiveMassFor(EnemyStats bot)
     {
-        bot.Mass += Mass / 5;
-        bot.transform.localScale += transform.localScale / 5;
+        //bot.Mass += Mass / 5;
+        //bot.transform.localScale += transform.localScale / 5;
+        bot.UpdateStats(Mass / 5, true);
     }
     private void GiveMassFor(CharacterStats character)
     {
-        character.Mass += Mass / 5;
-        character.transform.localScale += transform.localScale / 5;
+        character.UpdateStats(Mass / 5, true);
     }
     public void RandomBuff(byte effectDuration, ushort reward)
     {

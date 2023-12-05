@@ -1298,7 +1298,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  groundCheckDistance: 0.4
+  groundCheckDistance: 0.2
 --- !u!54 &2025548337
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1329,8 +1329,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 963194227}
   mass: 10
-  speed: 2
+  speed: 3
   jumpForce: 0.5
+  speedCoefficient: 0.08
 --- !u!1 &2044392096
 GameObject:
   m_ObjectHideFlags: 0

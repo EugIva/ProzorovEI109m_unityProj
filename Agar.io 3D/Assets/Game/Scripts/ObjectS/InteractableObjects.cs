@@ -29,11 +29,11 @@ public class InteractableObjects : MonoBehaviour
         switch (type)
         {
             case ObjectType.green_cube:
-                enemy.IncreaseMass(reward);
+                enemy.UpdateStats(reward, true);
                 break;
 
             case ObjectType.red_cube:
-                enemy.DecreaseMass(reward);
+                enemy.UpdateStats(reward);
                 break;
 
             case ObjectType.yellow_cube:
@@ -47,11 +47,11 @@ public class InteractableObjects : MonoBehaviour
         switch (type)
         {
             case ObjectType.green_cube:
-                character.IncreaseMass(reward);
+                character.UpdateStats(reward, true);
                 break;
 
             case ObjectType.red_cube:
-                character.DecreaseMass(reward);
+                character.UpdateStats(reward);
                 break;
 
             case ObjectType.yellow_cube:
