@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        Application.targetFrameRate = 144;
+        QualitySettings.vSyncCount = 0;
+    }
     public void SetUnlimitedMode() => gamemodeType = GamemodeType.unlimited;
     public void SetBattleRoyaleMode() => gamemodeType = GamemodeType.battleRoyale;
 

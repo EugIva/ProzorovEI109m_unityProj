@@ -21,7 +21,7 @@ public class Timer : MonoBehaviour
         }
 
         DisplayTime(0);
-        Debug.Log("Время вышло!");
+        GameController.Instance.CharacterDead();
     }
 
     void DisplayTime(int seconds)
