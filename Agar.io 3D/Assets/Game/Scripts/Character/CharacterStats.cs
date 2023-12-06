@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    public static CharacterStats Instance;
-    private CharacterStats() { }
-    [SerializeField] private new Camera camera;
+    private new Camera camera;
     [Min(0), SerializeField] private float mass = 1;
+
     public float Mass
     {
         get => mass;
@@ -15,7 +14,16 @@ public class CharacterStats : MonoBehaviour
             mass = value;
             if(mass <= 0)
             {
-                //Respawn logic
+                if (GameController.Instance.isUnlimited)
+                {
+                    GameController.Instance.RespawnCharacter();
+                    return;
+                }
+                else if (GameController.Instance.isBattleRoyale)
+                {
+                    GameController.Instance.CharacterDead();
+                    Destroy(gameObject);
+                }
             }
         }
     }
@@ -34,13 +42,8 @@ public class CharacterStats : MonoBehaviour
 
     private void Awake()
     {
+        camera = FindObjectOfType<Camera>();
         charachterMove = GetComponent<CharacterMove>();
-        if (Instance == null)
-        {
-            Instance = this;
-            return;
-        }
-        Destroy(gameObject);
     }
     public void UpdateStats(float value , bool increaseMass = false)
     {

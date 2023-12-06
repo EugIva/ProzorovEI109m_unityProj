@@ -15,7 +15,7 @@ public class InteractableObjects : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        CharacterStats character = CharacterStats.Instance;
+        CharacterStats character = FindObjectOfType<CharacterStats>();
         other.TryGetComponent(out EnemyStats enemy);
         if(enemy != null)
         {

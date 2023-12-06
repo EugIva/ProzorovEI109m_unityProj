@@ -18,8 +18,11 @@ public class CharacterMove : MonoBehaviour
         camera = FindObjectOfType<Camera>().transform;
         Cursor.lockState = CursorLockMode.Locked;
     }
-    void Update() => Jump();
-    private void FixedUpdate() => HandleMovement();
+    private void FixedUpdate()
+    {
+        Jump();
+        HandleMovement();
+    }
     void HandleMovement()
     {
         //None physic

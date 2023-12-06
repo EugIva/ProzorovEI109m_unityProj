@@ -109,8 +109,15 @@ public class EnemyStats : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-            print("LOSE");
-            //Respawn logic
+            if (GameController.Instance.isUnlimited)
+            {
+                GameController.Instance.RespawnCharacter();
+            }
+            else if (GameController.Instance.isBattleRoyale)
+            {
+                GameController.Instance.CharacterDead();
+                Destroy(character.gameObject);
+            }
         }
     }
 

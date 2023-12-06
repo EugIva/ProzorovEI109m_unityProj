@@ -9,6 +9,7 @@ public class Timer : MonoBehaviour
     [Tooltip("time in seconds")]
     [Min(1),SerializeField] private int initialTime = 60;
     private bool colorChanged;
+    private void Start() => ExecuteTimer();
     public void ExecuteTimer() => StartCoroutine(StartTimer(initialTime));
     IEnumerator StartTimer(int seconds)
     {
