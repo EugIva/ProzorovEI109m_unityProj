@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class GameController : MonoBehaviour
     private GameController() { }
 
     private new CameraFollow camera;
+    [SerializeField] private TMP_Text finalMassText;
     [SerializeField] private GameObject pausePanel, continueButton;
     [SerializeField] private Transform character;
     [SerializeField] private GameObject characterPrefab;
@@ -54,7 +56,6 @@ public class GameController : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex > 0 && Input.GetKeyDown(KeyCode.Escape) && !characterDead)
         {
-            Debug.Log("SOSI");
             Pause();
         }
     }
@@ -74,8 +75,12 @@ public class GameController : MonoBehaviour
     }
     public void CharacterDead()
     {
+        var characterMass = character.GetComponent<CharacterStats>().Mass;
+        Destroy(character.gameObject);
         characterDead = true;
         pausePanel.SetActive(true);
+        finalMassText.gameObject.SetActive(true);
+        finalMassText.text = $"Финальная масса: {characterMass}";
         continueButton.SetActive(false);
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 0;

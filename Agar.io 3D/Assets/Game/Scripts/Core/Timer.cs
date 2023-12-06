@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
 
     [Tooltip("time in seconds")]
     [Min(1),SerializeField] private int initialTime = 60;
+    private float characterMass;
     private bool colorChanged;
     private void Start() => ExecuteTimer();
     public void ExecuteTimer() => StartCoroutine(StartTimer(initialTime));
@@ -21,6 +22,7 @@ public class Timer : MonoBehaviour
         }
 
         DisplayTime(0);
+        characterMass = FindObjectOfType<CharacterStats>().Mass;
         GameController.Instance.CharacterDead();
     }
 

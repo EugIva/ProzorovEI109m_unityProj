@@ -116,7 +116,6 @@ public class EnemyStats : MonoBehaviour
             else if (GameController.Instance.isBattleRoyale)
             {
                 GameController.Instance.CharacterDead();
-                Destroy(character.gameObject);
             }
         }
     }
