@@ -824,7 +824,7 @@ Camera:
   m_GateFitMode: 2
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 12}
-  m_LensShift: {x: 0, y: 0.7}
+  m_LensShift: {x: 0, y: 0.6}
   m_FocalLength: 13.47622
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -882,6 +882,7 @@ MonoBehaviour:
   target: {fileID: 2025548335}
   rotationSpeed: 3
   maxLookUpAngle: 75
+  cameraLookDownOffset: 0.1
 --- !u!1 &1030504515
 GameObject:
   m_ObjectHideFlags: 0
