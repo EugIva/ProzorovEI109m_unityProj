@@ -54,13 +54,17 @@ public class EnemyStats : MonoBehaviour
 
     private IEnumerator AddSpeedBuff2(byte seconds, float reward)
     {
-        Speed += reward / 2;
+        Speed += reward / 3;
         while (seconds > 0)
         {
-            yield return new WaitForSeconds(1);
-            seconds--;
+            if (!Timer.isPause)
+            {
+                yield return new WaitForSecondsRealtime(1);
+                seconds--;
+            }
+            yield return new WaitForSecondsRealtime(0.3f);
         }
-        Speed -= reward / 2;
+        Speed -= reward / 3;
         yield break;
     }
     private void GiveMassFor(EnemyStats bot)

@@ -10,14 +10,21 @@ public class Timer : MonoBehaviour
     [Min(1),SerializeField] private int initialTime = 60;
     private float characterMass;
     private bool colorChanged;
-    private void Start() => ExecuteTimer();
+
+    public static bool isPause = false;
+
+    private void Start()
+    {
+        ExecuteTimer();
+    }
     public void ExecuteTimer() => StartCoroutine(StartTimer(initialTime));
     IEnumerator StartTimer(int seconds)
     {
         while (seconds > 0)
         {
+            yield return new WaitUntil(() => !isPause);
             DisplayTime(seconds);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSecondsRealtime(1);
             seconds--;
         }
 
@@ -25,7 +32,6 @@ public class Timer : MonoBehaviour
         characterMass = FindObjectOfType<CharacterStats>().Mass;
         GameController.Instance.CharacterDead();
     }
-
     void DisplayTime(int seconds)
     {
         int minutes = seconds / 60;

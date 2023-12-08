@@ -61,7 +61,7 @@ public class CharacterStats : MonoBehaviour
             Speed -= value / 1000;
             charachterMove.groundCheckDistance += value / 200;
 
-            camera.fieldOfView += value / 25;
+            camera.fieldOfView += value / 30;
 
             transform.localScale += new Vector3(value, value, value) / 100;
             return;
@@ -72,7 +72,7 @@ public class CharacterStats : MonoBehaviour
         Speed += value / 500;
         charachterMove.groundCheckDistance -= value / 100;
 
-        camera.fieldOfView -= value / 12.5f;
+        camera.fieldOfView -= value / 15f;
 
         transform.localScale -= new Vector3(value, value, value) / 50;
     }
@@ -95,8 +95,12 @@ public class CharacterStats : MonoBehaviour
         JumpForce += reward / 4;
         while (seconds > 0)
         {
-            yield return new WaitForSeconds(1);
-            seconds--;
+            if (!Timer.isPause)
+            {
+                yield return new WaitForSecondsRealtime(1);
+                seconds--;
+            }
+            yield return new WaitForSecondsRealtime(0.3f);
         }
         JumpForce -= reward / 4;
         GameController.Instance.jumpBuffCount.text = $"x{--jumpCounter}";
@@ -108,8 +112,12 @@ public class CharacterStats : MonoBehaviour
         Speed += reward;
         while (seconds > 0)
         {
-            yield return new WaitForSeconds(1);
-            seconds--;
+            if (!Timer.isPause)
+            {
+                yield return new WaitForSecondsRealtime(1);
+                seconds--;
+            }
+            yield return new WaitForSecondsRealtime(0.3f);
         }
         Speed -= reward;
         GameController.Instance.speedBuffCount.text = $"x{--speedCounter}";

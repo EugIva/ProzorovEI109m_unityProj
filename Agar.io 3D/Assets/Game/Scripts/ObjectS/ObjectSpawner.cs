@@ -31,6 +31,7 @@ public class ObjectSpawner : MonoBehaviour
     [Space(15), SerializeField] private GameObject[] objectsPrefab;
     [Tooltip("The chance of spawning an object from the SpawnObjects array. Specify values for each element")]
     [SerializeField] private float[] spawnWeights;
+    [Range(0, 30), SerializeField] private int spawnRate = 20;
     [Space(15), SerializeField] private Transform firstBorder;
     [SerializeField] private Transform secondBorder;
 
@@ -91,9 +92,17 @@ public class ObjectSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1.5f);
-            yield return new WaitUntil(() => objectsInMap < MaxObjectsInMap / 2);
-            SpawnObjects();
+            //yield return new WaitForSeconds(1.5f);
+            //yield return new WaitUntil(() => objectsInMap < MaxObjectsInMap / 2);
+            //SpawnObjects();
+            if (!Timer.isPause)
+            {
+                yield return new WaitForSecondsRealtime(1.5f);
+                yield return new WaitUntil(() => ObjectsInMap < MaxObjectsInMap * 0.95f);
+                yield return new WaitForSecondsRealtime(spawnRate);
+                SpawnObjects();
+            }
+            yield return new WaitForSecondsRealtime(0.3f);
         }
     }
     private int GetWeightedRandomIndex()

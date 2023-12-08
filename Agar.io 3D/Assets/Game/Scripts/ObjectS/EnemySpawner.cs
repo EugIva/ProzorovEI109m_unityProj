@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
     [Min(0), SerializeField] private int maxEnemiesInMap;
     public int MaxEnemiesInMap { get => maxEnemiesInMap; private set { } }
 
-    [Range(0, 30), SerializeField] private int spawnRate;
+    [Range(0, 30), SerializeField] private int spawnRate = 20;
 
     [Space(15)]public GameObject[] EnemyPrefab;
 
@@ -85,10 +85,14 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1.5f);
-            yield return new WaitUntil(() => EnemiesInMap < MaxEnemiesInMap);
-            yield return new WaitForSeconds(spawnRate);
-            SpawnObjects();
+            if (!Timer.isPause)
+            {
+                yield return new WaitForSecondsRealtime(1.5f);
+                yield return new WaitUntil(() => EnemiesInMap < MaxEnemiesInMap);
+                yield return new WaitForSecondsRealtime(spawnRate);
+                SpawnObjects();
+            }
+            yield return new WaitForSecondsRealtime(0.3f);
         }
     }
 #if UNITY_EDITOR

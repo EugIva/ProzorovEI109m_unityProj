@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 10
-  speed: 1
+  speed: 0.5
   enemyMove: {fileID: 5516894490740525379}
 --- !u!114 &5516894490740525379
 MonoBehaviour:
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentObject: {fileID: 0}
-  FOV: 4
+  FOV: 4.5
   layer:
     serializedVersion: 2
     m_Bits: 128
@@ -144,7 +144,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.15
   m_Drag: 0
-  m_AngularDrag: 0.1
+  m_AngularDrag: 0.15
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0

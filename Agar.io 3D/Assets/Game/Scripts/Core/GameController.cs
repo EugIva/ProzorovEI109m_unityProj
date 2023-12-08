@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 2;
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             buttons[0].onClick.AddListener(GameManager.Instance.SetUnlimitedMode);
@@ -66,26 +66,30 @@ public class GameController : MonoBehaviour
         {
             Pause();
         }
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.LeftBracket))
         {
             Time.timeScale = 3;
         }
         else if (Input.GetKeyDown(KeyCode.RightBracket))
         {
-            Time.timeScale = 1;
+            Time.timeScale = 2;
         }
+#endif
     }
     public void Pause()
     {
         if (!pausePanel.activeInHierarchy)
         {
             Time.timeScale = 0;
+            Timer.isPause = true;
             pausePanel.SetActive(true);
 
             Cursor.lockState = CursorLockMode.Confined;
             return;
         }
-        Time.timeScale = 1;
+        Time.timeScale = 2;
+        Timer.isPause = false;
         pausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }

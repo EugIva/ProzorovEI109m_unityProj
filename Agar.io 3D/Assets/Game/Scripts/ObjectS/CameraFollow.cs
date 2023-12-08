@@ -12,17 +12,26 @@ public class CameraFollow : MonoBehaviour
     void Update() => Move();
     private void Move()
     {
-        if(target != null)
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
+
+        target.Rotate(0, mouseX, 0);
+
+        currentRotationX -= mouseY;
+        currentRotationX = Mathf.Clamp(currentRotationX, -maxLookUpAngle / 100, maxLookUpAngle);
+
+        Quaternion newRotation = Quaternion.Euler(currentRotationX, transform.eulerAngles.y + mouseX, 0);
+        transform.rotation = newRotation;
+
+        RaycastHit hit;
+        Vector3 raycastOrigin = target.position + Vector3.up * 0.5f;
+        if (Physics.Raycast(raycastOrigin, -transform.forward, out hit, 5.0f))
         {
-            float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-            float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
-
-            target.Rotate(0, mouseX, 0);
-
-            currentRotationX -= mouseY;
-            currentRotationX = Mathf.Clamp(currentRotationX, -maxLookUpAngle / 100, maxLookUpAngle);
-            transform.rotation = Quaternion.Euler(currentRotationX, transform.eulerAngles.y + mouseX, 0);
-
+            transform.position = hit.point + transform.forward * 0.1f; 
+        }
+        else
+        {
+            // If no collision, set the position based on the original logic
             transform.position = target.position - transform.forward * 5.0f;
         }
     }

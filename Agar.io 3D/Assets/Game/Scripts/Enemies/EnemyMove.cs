@@ -140,14 +140,18 @@ public class EnemyMove : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitUntil(() => !IsBusy());
-            yield return new WaitForSeconds(0.5f);
-            if (IsBusy())
+            if (!Timer.isPause)
             {
-                continue;
+                yield return new WaitUntil(() => !IsBusy());
+                yield return new WaitForSecondsRealtime(0.5f);
+                if (IsBusy())
+                {
+                    continue;
+                }
+                rb.velocity = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * botStats.Speed;
+                yield return new WaitForSecondsRealtime(3f);
             }
-            rb.velocity = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * botStats.Speed;
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSecondsRealtime(0.3f);
         }
     }
     #endregion
