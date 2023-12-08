@@ -5,7 +5,8 @@ public class CharacterStats : MonoBehaviour
 {
     private new Camera camera;
     [Min(0), SerializeField] private float mass = 1;
-
+    private int speedCounter;
+    private int jumpCounter;
     public float Mass
     {
         get => mass;
@@ -30,9 +31,11 @@ public class CharacterStats : MonoBehaviour
 
     [Min(0), SerializeField] private float speed = 1;
     public float Speed { get => speed; private set { speed = value; } }
+    private float lastSpeed;
 
     [Min(0), SerializeField] private float jumpForce = 1;
     public float JumpForce { get => jumpForce; private set { jumpForce = value; } }
+    private float lastJumpForce;
 
 
     [Tooltip("The lower the coefficient, the higher the speed")]
@@ -45,7 +48,12 @@ public class CharacterStats : MonoBehaviour
         camera = FindObjectOfType<Camera>();
         charachterMove = GetComponent<CharacterMove>();
     }
-    public void UpdateStats(float value , bool increaseMass = false)
+    private void Start()
+    {
+        lastJumpForce = JumpForce;
+        lastSpeed = Speed;
+    }
+    public void UpdateStats(float value, bool increaseMass = false)
     {
         if (increaseMass)
         {
@@ -58,7 +66,9 @@ public class CharacterStats : MonoBehaviour
             transform.localScale += new Vector3(value, value, value) / 100;
             return;
         }
+        CancelAllBuffs();
         Mass -= value * 2;
+        lastSpeed = Speed;
         Speed += value / 500;
         charachterMove.groundCheckDistance -= value / 100;
 
@@ -66,29 +76,43 @@ public class CharacterStats : MonoBehaviour
 
         transform.localScale -= new Vector3(value, value, value) / 50;
     }
+    private void CancelAllBuffs()
+    {
+        StopAllCoroutines();
+        jumpCounter = 0;
+        speedCounter = 0;
+        GameController.Instance.jumpBuffCount.text = "x0";
+        GameController.Instance.speedBuffCount.text = "x0";
+        Speed = lastSpeed;
+        JumpForce = lastJumpForce;
+    }
     public void TemporaryChangeSpeed(byte seconds, ushort reward) => StartCoroutine(AddSpeedBuff(seconds, reward));
     public void TemporaryChangeJumpForce(byte seconds, ushort reward) => StartCoroutine(AddJumpForceBuff(seconds, reward));
 
     private IEnumerator AddJumpForceBuff(byte seconds, float reward)
     {
-        JumpForce += reward / 2;
+        GameController.Instance.jumpBuffCount.text = $"x{++jumpCounter}";
+        JumpForce += reward / 4;
         while (seconds > 0)
         {
             yield return new WaitForSeconds(1);
             seconds--;
         }
-        JumpForce -= reward / 2;
+        JumpForce -= reward / 4;
+        GameController.Instance.jumpBuffCount.text = $"x{--jumpCounter}";
         yield break;
     }
     private IEnumerator AddSpeedBuff(byte seconds, float reward)
     {
-        Speed += reward / 3;
+        GameController.Instance.speedBuffCount.text = $"x{++speedCounter}";
+        Speed += reward;
         while (seconds > 0)
         {
             yield return new WaitForSeconds(1);
             seconds--;
         }
-        Speed -= reward / 3;
+        Speed -= reward;
+        GameController.Instance.speedBuffCount.text = $"x{--speedCounter}";
         yield break;
     }
     public void RandomBuff(byte effectDuration, ushort reward)

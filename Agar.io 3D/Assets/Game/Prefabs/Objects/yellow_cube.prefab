@@ -112,4 +112,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   reward: 1
-  effectDuration: 10
+  effectDuration: 20

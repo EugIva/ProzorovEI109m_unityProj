@@ -54,13 +54,13 @@ public class EnemyStats : MonoBehaviour
 
     private IEnumerator AddSpeedBuff2(byte seconds, float reward)
     {
-        Speed += reward / 3;
+        Speed += reward / 2;
         while (seconds > 0)
         {
             yield return new WaitForSeconds(1);
             seconds--;
         }
-        Speed -= reward / 3;
+        Speed -= reward / 2;
         yield break;
     }
     private void GiveMassFor(EnemyStats bot)
@@ -75,7 +75,7 @@ public class EnemyStats : MonoBehaviour
     }
     public void RandomBuff(byte effectDuration, ushort reward)
     {
-        byte randomEffect = (byte)Random.Range(0, 2);
+        byte randomEffect = (byte)Random.Range(0, 1);
         switch (randomEffect)
         {
             case 0:

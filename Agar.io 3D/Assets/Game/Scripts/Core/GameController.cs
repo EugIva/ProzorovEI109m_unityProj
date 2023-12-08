@@ -10,10 +10,14 @@ public class GameController : MonoBehaviour
 
     private new CameraFollow camera;
     [SerializeField] private TMP_Text finalMassText;
-    [SerializeField] private GameObject pausePanel, continueButton;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private Button continueButton;
     [SerializeField] private Transform character;
     [SerializeField] private GameObject characterPrefab;
+
+    public TMP_Text speedBuffCount, jumpBuffCount;
     public Button[] buttons;
+    public Button[] locationButtons;
     public bool isUnlimited;
     public bool isBattleRoyale;
     public bool characterDead;
@@ -37,6 +41,10 @@ public class GameController : MonoBehaviour
             buttons[0].onClick.AddListener(GameManager.Instance.SetUnlimitedMode);
             buttons[1].onClick.AddListener(GameManager.Instance.SetBattleRoyaleMode);
             buttons[2].onClick.AddListener(GameManager.Instance.StartGame);
+            buttons[3].onClick.AddListener(CloseGame);
+            locationButtons[0].onClick.AddListener(() => SetLocation(1));
+            locationButtons[1].onClick.AddListener(() => SetLocation(2));
+            locationButtons[2].onClick.AddListener(() => SetLocation(3));
             return;
         }
         switch (GameManager.Instance.gamemodeType)
@@ -58,6 +66,14 @@ public class GameController : MonoBehaviour
         {
             Pause();
         }
+        if (Input.GetKeyDown(KeyCode.LeftBracket))
+        {
+            Time.timeScale = 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightBracket))
+        {
+            Time.timeScale = 1;
+        }
     }
     public void Pause()
     {
@@ -73,6 +89,7 @@ public class GameController : MonoBehaviour
         pausePanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
     }
+    private void CloseGame() => Application.Quit();
     public void CharacterDead()
     {
         var characterMass = character.GetComponent<CharacterStats>().Mass;
@@ -81,7 +98,7 @@ public class GameController : MonoBehaviour
         pausePanel.SetActive(true);
         finalMassText.gameObject.SetActive(true);
         finalMassText.text = $"Финальная масса: {characterMass}";
-        continueButton.SetActive(false);
+        continueButton.interactable = false;
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 0;
     }
@@ -90,10 +107,8 @@ public class GameController : MonoBehaviour
         GameManager.Instance.location = (GameManager.Location)index;
     }
     public void LoadScene(int sceneIndex) => SceneManager.LoadScene(sceneIndex);
-
     public void RespawnCharacter()
     {
-
         character = FindObjectOfType<CharacterStats>().transform;
         Destroy(character.gameObject);
         var player = Instantiate(characterPrefab, new Vector3(200, 83, 200), Quaternion.identity);
