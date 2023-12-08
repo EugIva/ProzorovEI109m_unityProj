@@ -28,14 +28,14 @@ public class EnemyStats : MonoBehaviour
         if (increaseMass)
         {
             Mass += value;
-            speed -= value / 1000;
+            speed -= value / 500;
 
             transform.localScale += new Vector3(value, value, value) / 100;
             enemyMove.FOV += value / 500;
             return;
         }
         Mass -= value * 2;
-        speed += value / 500;
+        speed += value / 250;
 
         transform.localScale -= new Vector3(value, value, value) / 50;
         enemyMove.FOV -= value / 250;

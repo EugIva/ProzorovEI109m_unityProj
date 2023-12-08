@@ -396,7 +396,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -824,7 +824,7 @@ Camera:
   m_GateFitMode: 2
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 12}
-  m_LensShift: {x: 0, y: 0.4}
+  m_LensShift: {x: 0, y: 0.7}
   m_FocalLength: 14.485281
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -2270,8 +2270,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5549238161226978670, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}
+      propertyPath: speed
+      value: 5.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549238161226978670, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}
       propertyPath: camera
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549238161226978670, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}
+      propertyPath: jumpForce
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5549238161226978670, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}
       propertyPath: speedCoefficient
