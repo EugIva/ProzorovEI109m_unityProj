@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mass: 10
   speed: 5.2
-  jumpForce: 0.4
+  jumpForce: 0.6
   speedCoefficient: 0.06
 --- !u!114 &5549238161226978668
 MonoBehaviour:

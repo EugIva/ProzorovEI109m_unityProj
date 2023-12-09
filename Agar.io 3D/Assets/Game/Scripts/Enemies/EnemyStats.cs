@@ -54,7 +54,7 @@ public class EnemyStats : MonoBehaviour
 
     private IEnumerator AddSpeedBuff2(byte seconds, float reward)
     {
-        Speed += reward / 3;
+        Speed += reward / 5;
         while (seconds > 0)
         {
             if (!Timer.isPause)
@@ -64,7 +64,7 @@ public class EnemyStats : MonoBehaviour
             }
             yield return new WaitForSecondsRealtime(0.3f);
         }
-        Speed -= reward / 3;
+        Speed -= reward / 5;
         yield break;
     }
     private void GiveMassFor(EnemyStats bot)

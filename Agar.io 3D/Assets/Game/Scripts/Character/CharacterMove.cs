@@ -6,7 +6,7 @@ public class CharacterMove : MonoBehaviour
     private Rigidbody rb;
     private CharacterStats characterStats;
     private new Transform camera;
-
+    [Min(0), SerializeField] private float lerpFactor = 0.04f;
     [Header("Other Settings")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] internal float groundCheckDistance = 0.1f;
@@ -20,21 +20,11 @@ public class CharacterMove : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Jump();
         HandleMovement();
+        Jump();
     }
     void HandleMovement()
     {
-        //None physic
-        //float X = Input.GetAxis("Horizontal");
-        //float Y = Input.GetAxis("Vertical");
-
-        //Vector3 moveInput = new(X, 0, Y);
-
-        //Vector3 moveDirection = Quaternion.Euler(0, transform.eulerAngles.y, 0) * moveInput;
-
-        //transform.Translate(characterStats.Speed * Time.deltaTime * moveDirection, Space.World);
-
         float X = Input.GetAxis("Horizontal");
         float Y = Input.GetAxis("Vertical");
 
@@ -44,9 +34,6 @@ public class CharacterMove : MonoBehaviour
 
         moveDirection = Vector3.Scale(moveDirection, transform.localScale);
 
-
-
-        float lerpFactor = 0.04f;
         if (moveInput.magnitude > 0.1f)
         {
             Vector3 targetVelocity = moveDirection * characterStats.Speed / (characterStats.Mass * characterStats.SpeedCoefficient);
@@ -59,15 +46,12 @@ public class CharacterMove : MonoBehaviour
     }
     private void Jump()
     {
-        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             rb.AddForce(0f, characterStats.JumpForce, 0f, ForceMode.Impulse);
         }
     }
-    private bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
-    }
+    private bool IsGrounded() => Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {

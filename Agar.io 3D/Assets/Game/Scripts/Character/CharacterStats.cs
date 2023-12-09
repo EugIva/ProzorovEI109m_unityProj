@@ -92,7 +92,7 @@ public class CharacterStats : MonoBehaviour
     private IEnumerator AddJumpForceBuff(byte seconds, float reward)
     {
         GameController.Instance.jumpBuffCount.text = $"x{++jumpCounter}";
-        JumpForce += reward / 4;
+        JumpForce += reward / 10;
         while (seconds > 0)
         {
             if (!Timer.isPause)
@@ -102,7 +102,7 @@ public class CharacterStats : MonoBehaviour
             }
             yield return new WaitForSecondsRealtime(0.3f);
         }
-        JumpForce -= reward / 4;
+        JumpForce -= reward / 10;
         GameController.Instance.jumpBuffCount.text = $"x{--jumpCounter}";
         yield break;
     }
