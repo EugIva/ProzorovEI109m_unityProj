@@ -1327,6 +1327,7 @@ Transform:
   - {fileID: 1505415082}
   - {fileID: 1332498204}
   - {fileID: 2044392097}
+  - {fileID: 1984350994}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1875,7 +1876,7 @@ MonoBehaviour:
   continueButton: {fileID: 2045776509}
   character: {fileID: 2025548335}
   characterPrefab: {fileID: 5549238161226978679, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}
-  characterSpawnPosition: {x: 200, y: 83, z: 200}
+  characterSpawnPosition: {x: 200, y: 92, z: 200}
   speedBuffCount: {fileID: 283901821}
   jumpBuffCount: {fileID: 949196174}
   buttons: []
@@ -1915,8 +1916,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2044392097}
-  m_RootOrder: 0
+  m_Father: {fileID: 1180699529}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1984350995
 BoxCollider:
@@ -1985,7 +1986,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2044392097}
   - component: {fileID: 2044392099}
-  - component: {fileID: 2044392098}
+  - component: {fileID: 2044392100}
   m_Layer: 6
   m_Name: FlatTerrain
   m_TagString: Untagged
@@ -2004,22 +2005,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1984350994}
+  m_Children: []
   m_Father: {fileID: 1180699529}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!154 &2044392098
-TerrainCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2044392096}
-  m_Material: {fileID: 0}
-  m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: 62b48d096d5da3343b25647ac5aa61c9, type: 2}
-  m_EnableTreeColliders: 0
 --- !u!218 &2044392099
 Terrain:
   m_ObjectHideFlags: 0
@@ -2029,7 +2018,7 @@ Terrain:
   m_GameObject: {fileID: 2044392096}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 62b48d096d5da3343b25647ac5aa61c9, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 069db4fc769ef834395eeb7cd68755f3, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -2049,11 +2038,22 @@ Terrain:
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
-  m_ScaleInLightmap: 0.0256
+  m_ScaleInLightmap: 1
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
   m_RenderingLayerMask: 1
-  m_AllowAutoConnect: 1
+  m_AllowAutoConnect: 0
+--- !u!154 &2044392100
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044392096}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 069db4fc769ef834395eeb7cd68755f3, type: 2}
+  m_EnableTreeColliders: 1
 --- !u!1 &2045776507
 GameObject:
   m_ObjectHideFlags: 0
@@ -2301,7 +2301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5549238161226978675, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 83
+      value: 92
       objectReference: {fileID: 0}
     - target: {fileID: 5549238161226978675, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}
       propertyPath: m_LocalPosition.z

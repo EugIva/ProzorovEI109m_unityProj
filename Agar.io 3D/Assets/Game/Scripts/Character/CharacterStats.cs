@@ -58,10 +58,10 @@ public class CharacterStats : MonoBehaviour
         if (increaseMass)
         {
             Mass += value;
-            Speed -= value / 1000;
+            Speed -= value / 700;
             charachterMove.groundCheckDistance += value / 200;
 
-            camera.fieldOfView += value / 30;
+            camera.fieldOfView += value / 20;
 
             transform.localScale += new Vector3(value, value, value) / 100;
             return;
@@ -69,10 +69,10 @@ public class CharacterStats : MonoBehaviour
         CancelAllBuffs();
         Mass -= value * 2;
         lastSpeed = Speed;
-        Speed += value / 500;
+        Speed += value / 350;
         charachterMove.groundCheckDistance -= value / 100;
 
-        camera.fieldOfView -= value / 15f;
+        camera.fieldOfView -= value / 10f;
 
         transform.localScale -= new Vector3(value, value, value) / 50;
     }
