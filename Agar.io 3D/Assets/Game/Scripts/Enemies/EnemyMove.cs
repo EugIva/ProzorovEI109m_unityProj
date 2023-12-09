@@ -42,7 +42,7 @@ public class EnemyMove : MonoBehaviour
             //Attack object
             if (currentObjectMass <= botStats.Mass)
             {
-                rb.velocity = direction * botStats.Speed;
+                rb.velocity = direction * botStats.Speed / (botStats.Mass * botStats.SpeedCoeficient);
 
                 if (distance >= FOV)
                 {
@@ -52,18 +52,12 @@ public class EnemyMove : MonoBehaviour
             //Run away from object
             else
             {
-                if (!changedSpeed)
-                {
-                    changedSpeed = true;
-                    botStats.ChangeSpeed(0.9f);
-                }
                 Vector3 awayDirection = -direction.normalized;
-                rb.velocity = new Vector3(awayDirection.x, 0, awayDirection.z) * botStats.Speed;
+                rb.velocity = new Vector3(awayDirection.x, 0, awayDirection.z) * botStats.Speed / (botStats.Mass * botStats.SpeedCoeficient);
 
                 if (distance >= FOV * 2)
                 {
                     MissingObject();
-                    botStats.ChangeSpeed(1, true);
                     changedSpeed = false;
                 }
             }
@@ -80,7 +74,7 @@ public class EnemyMove : MonoBehaviour
             Vector3 direction = currentObject.transform.position - transform.position;
             direction.Normalize();
 
-            rb.velocity = direction * botStats.Speed;
+            rb.velocity = direction * botStats.Speed / (botStats.Mass * botStats.SpeedCoeficient);
             if (distance >= FOV)
             {
                 MissingObject();
@@ -157,7 +151,7 @@ public class EnemyMove : MonoBehaviour
                 {
                     continue;
                 }
-                rb.velocity = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * botStats.Speed;
+                rb.velocity = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * botStats.Speed / (botStats.Mass * botStats.SpeedCoeficient);
                 yield return new WaitForSecondsRealtime(3f);
             }
             yield return new WaitForSecondsRealtime(0.3f);

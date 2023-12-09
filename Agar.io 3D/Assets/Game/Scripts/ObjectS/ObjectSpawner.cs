@@ -32,6 +32,8 @@ public class ObjectSpawner : MonoBehaviour
     [Tooltip("The chance of spawning an object from the SpawnObjects array. Specify values for each element")]
     [SerializeField] private float[] spawnWeights;
     [Range(0, 30), SerializeField] private int spawnRate = 20;
+    [Tooltip("The radius in which other objects will not be able to appear")]
+    [Range(0.1f, 3), SerializeField] private float spawnRadius = 0.3f;
     [Space(15), SerializeField] private Transform firstBorder;
     [SerializeField] private Transform secondBorder;
 
@@ -66,27 +68,35 @@ public class ObjectSpawner : MonoBehaviour
         GameObject obj;
         while (ObjectsInMap < MaxObjectsInMap)
         {
-            //Old spawn logic
-            //randomX = Mathf.Lerp(firstBorder.position.x, secondBorder.position.x, Random.value);
-            //randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
-
-            //randomIndex = GetWeightedRandomIndex();
-            //obj = Instantiate(objectsPrefab[randomIndex], new Vector3(randomX, firstBorder.position.y, randomZ), Quaternion.identity);
-
-            //obj.transform.SetParent(transform);
-            //ObjectsInMap++;
-
             randomX = Mathf.Lerp(firstBorder.position.x, secondBorder.position.x, Random.value);
             randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
 
             terrainHeight = terrain.SampleHeight(new Vector3(randomX, 0f, randomZ));
 
-            randomIndex = GetWeightedRandomIndex();
-            obj = Instantiate(objectsPrefab[randomIndex], new Vector3(randomX, terrainHeight+offsetObjects, randomZ), Quaternion.identity);
+            bool canSpawn = CheckSpawnPosition(new Vector3(randomX, terrainHeight + offsetObjects, randomZ), spawnRadius);
 
-            obj.transform.SetParent(transform);
-            ObjectsInMap++;
+            if (canSpawn)
+            {
+                randomIndex = GetWeightedRandomIndex();
+                obj = Instantiate(objectsPrefab[randomIndex], new Vector3(randomX, terrainHeight + offsetObjects, randomZ), Quaternion.identity);
+
+                obj.transform.SetParent(transform);
+                ObjectsInMap++;
+            }
         }
+    }
+    private bool CheckSpawnPosition(Vector3 spawnPosition, float radius)
+    {
+        Collider[] colliders = Physics.OverlapSphere(spawnPosition, radius);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.TryGetComponent(out InteractableObjects _))
+            {
+                return false;
+            }
+        }
+        return true;
     }
     private IEnumerator PermanentSpawnObjects()
     {

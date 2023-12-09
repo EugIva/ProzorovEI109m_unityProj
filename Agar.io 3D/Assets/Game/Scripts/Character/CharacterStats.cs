@@ -68,7 +68,6 @@ public class CharacterStats : MonoBehaviour
         }
         CancelAllBuffs();
         Mass -= value * 2;
-        lastSpeed = Speed;
         Speed += value / 350;
         charachterMove.groundCheckDistance -= value / 100;
 
@@ -78,6 +77,7 @@ public class CharacterStats : MonoBehaviour
     }
     private void CancelAllBuffs()
     {
+        lastSpeed = Speed;
         StopAllCoroutines();
         jumpCounter = 0;
         speedCounter = 0;

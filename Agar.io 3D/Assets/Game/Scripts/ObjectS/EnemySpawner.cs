@@ -28,9 +28,10 @@ public class EnemySpawner : MonoBehaviour
     [Min(0), SerializeField] private int maxEnemiesInMap;
     public int MaxEnemiesInMap { get => maxEnemiesInMap; private set { } }
 
-    [Range(0, 30), SerializeField] private int spawnRate = 20;
 
     [Space(15)]public GameObject[] EnemyPrefab;
+    [SerializeField] private float[] spawnWeights;
+    [Range(0, 30), SerializeField] private int spawnRate = 20;
 
     [Space(15), SerializeField] private Transform firstBorder;
     [SerializeField] private Transform secondBorder;
@@ -65,6 +66,7 @@ public class EnemySpawner : MonoBehaviour
         float randomX;
         float randomZ;
         float terrainHeight;
+        int randomIndex;
         GameObject obj;
         while(EnemiesInMap < MaxEnemiesInMap)
         {
@@ -72,13 +74,11 @@ public class EnemySpawner : MonoBehaviour
             randomZ = Mathf.Lerp(firstBorder.position.z, secondBorder.position.z, Random.value);
 
             terrainHeight = terrain.SampleHeight(new Vector3(randomX, 0f, randomZ));
+            randomIndex = GetWeightedRandomIndex();
 
-            for (int i = 0; i < EnemyPrefab.Length; i++)
-            {
-                obj = Instantiate(EnemyPrefab[i], new Vector3(randomX, terrainHeight + offsetEnemies, randomZ), Quaternion.identity);
-                obj.transform.SetParent(transform);
-                EnemiesInMap++;
-            }
+            obj = Instantiate(EnemyPrefab[randomIndex], new Vector3(randomX, terrainHeight + offsetEnemies, randomZ), Quaternion.identity);
+            obj.transform.SetParent(transform);
+            EnemiesInMap++;
         }
     }
     private IEnumerator PermanentSpawnObjects()
@@ -94,6 +94,28 @@ public class EnemySpawner : MonoBehaviour
             }
             yield return new WaitForSecondsRealtime(0.3f);
         }
+    }
+    private int GetWeightedRandomIndex()
+    {
+        float totalWeight = 0f;
+        foreach (float weight in spawnWeights)
+        {
+            totalWeight += weight;
+        }
+
+        float randomValue = Random.value * totalWeight;
+
+        for (int i = 0; i < spawnWeights.Length; i++)
+        {
+            if (randomValue < spawnWeights[i])
+            {
+                return i;
+            }
+
+            randomValue -= spawnWeights[i];
+        }
+
+        return spawnWeights.Length - 1;
     }
 #if UNITY_EDITOR
     private void OnDrawGizmos()

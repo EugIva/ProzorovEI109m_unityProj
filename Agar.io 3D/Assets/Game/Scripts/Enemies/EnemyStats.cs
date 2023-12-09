@@ -11,7 +11,7 @@ public class EnemyStats : MonoBehaviour
         private set
         {
             mass = value;
-            if(mass <= 0)
+            if(mass <= 8)
             {
                 Destroy(gameObject);
             }
@@ -20,9 +20,16 @@ public class EnemyStats : MonoBehaviour
 
     [Min(0), SerializeField] private float speed = 1;
     public float Speed { get => speed; private set { speed = value; } }
+    [Tooltip("Recomended base value = 0.02")]
+    [Min(0), SerializeField] private float speedCoeficient = 0.02f;
+    public float SpeedCoeficient { get => speedCoeficient; private set {  } }
+
+    private float lastSpeed;
+    private int speedCounter;
 
     [SerializeField] private EnemyMove enemyMove;
 
+    private void Start() => lastSpeed = Speed;
     public void UpdateStats(float value, bool increaseMass = false)
     {
         if (increaseMass)
@@ -31,30 +38,29 @@ public class EnemyStats : MonoBehaviour
             speed -= value / 500;
 
             transform.localScale += new Vector3(value, value, value) / 100;
-            enemyMove.FOV += value / 500;
+            enemyMove.FOV += value / 100;
             return;
         }
+        //CancelAllBuffs();
         Mass -= value * 2;
         speed += value / 250;
 
         transform.localScale -= new Vector3(value, value, value) / 50;
-        enemyMove.FOV -= value / 250;
+        enemyMove.FOV -= value / 50;
     }
-    public void ChangeSpeed(float value, bool baseValue = false)
-    {
-        if (baseValue)
-        {
-            Speed = 1;
-            return;
-        }
-        Speed *= value;
-    }
+    //private void CancelAllBuffs()
+    //{
+    //    lastSpeed = Speed;
+    //    StopAllCoroutines();
+    //    speedCounter = 0;
+    //    Speed = lastSpeed;
+    //}
 
     public void TemporaryChangeSpeed(byte seconds, ushort reward) => StartCoroutine(AddSpeedBuff2(seconds, reward));
 
     private IEnumerator AddSpeedBuff2(byte seconds, float reward)
     {
-        Speed += reward / 5;
+        Speed += reward / 20;
         while (seconds > 0)
         {
             if (!Timer.isPause)
@@ -64,7 +70,7 @@ public class EnemyStats : MonoBehaviour
             }
             yield return new WaitForSecondsRealtime(0.3f);
         }
-        Speed -= reward / 5;
+        Speed -= reward / 20;
         yield break;
     }
     private void GiveMassFor(EnemyStats bot)
@@ -77,6 +83,7 @@ public class EnemyStats : MonoBehaviour
     {
         character.UpdateStats(Mass / 5, true);
     }
+
     public void RandomBuff(byte effectDuration, ushort reward)
     {
         byte randomEffect = (byte)Random.Range(0, 1);
@@ -113,6 +120,8 @@ public class EnemyStats : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
+            Mass += character.Mass / 5;
+            transform.localScale += character.transform.localScale / 5;
             if (GameController.Instance.isUnlimited)
             {
                 GameController.Instance.RespawnCharacter();

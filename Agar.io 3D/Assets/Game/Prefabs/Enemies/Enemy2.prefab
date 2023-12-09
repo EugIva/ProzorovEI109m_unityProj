@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5516894490740525381}
   - component: {fileID: 5516894490740525380}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: Enemy2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5516894490740525387}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.226}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,8 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072b812904893e64486e2ea1113c01a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 10
-  speed: 0.55
+  mass: 15
+  speed: 0.44
+  speedCoeficient: 0.032
   enemyMove: {fileID: 5516894490740525379}
 --- !u!114 &5516894490740525379
 MonoBehaviour:
@@ -115,7 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentObject: {fileID: 0}
-  FOV: 4.4
+  FOV: 4.45
   layer:
     serializedVersion: 2
     m_Bits: 128

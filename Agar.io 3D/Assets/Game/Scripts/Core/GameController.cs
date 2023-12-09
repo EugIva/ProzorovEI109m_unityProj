@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform character;
     [SerializeField] private GameObject characterPrefab;
 
-    [SerializeField] private Vector3 characterSpawnPosition;
+    [SerializeField] private Vector3[] characterSpawnPosition;
 
     public TMP_Text speedBuffCount, jumpBuffCount;
     public Button[] buttons;
@@ -133,7 +133,9 @@ public class GameController : MonoBehaviour
     {
         character = FindObjectOfType<CharacterStats>().transform;
         Destroy(character.gameObject);
-        var player = Instantiate(characterPrefab, characterSpawnPosition, Quaternion.identity);
+        int randomSpawnPosition = Random.Range(0, characterSpawnPosition.Length);
+        Vector3 newPosition = characterSpawnPosition[randomSpawnPosition];
+        var player = Instantiate(characterPrefab, newPosition, Quaternion.identity);
         camera.SetNewTarget(player.transform);
     }
 }

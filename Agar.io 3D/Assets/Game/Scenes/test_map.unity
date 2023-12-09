@@ -1485,7 +1485,10 @@ MonoBehaviour:
   maxEnemiesInMap: 100
   spawnRate: 10
   EnemyPrefab:
+  - {fileID: 5516894490740525387, guid: 812e3b57d48bb2c4d8aba1b561deeac7, type: 3}
   - {fileID: 5516894490740525387, guid: 231b33af55993cf419a46fa898ba8cfe, type: 3}
+  - {fileID: 5516894490740525387, guid: b9dfbd51c73b04245a444bcd0a2320da, type: 3}
+  spawnWeights: []
   firstBorder: {fileID: 379916386}
   secondBorder: {fileID: 1560758435}
   terrain: {fileID: 2044392099}
@@ -1975,7 +1978,14 @@ MonoBehaviour:
   continueButton: {fileID: 2045776509}
   character: {fileID: 2025548335}
   characterPrefab: {fileID: 5549238161226978679, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}
-  characterSpawnPosition: {x: 200, y: 92, z: 200}
+  characterSpawnPosition:
+  - {x: 100, y: 99, z: 100}
+  - {x: 130, y: 94, z: 130}
+  - {x: 160, y: 90, z: 160}
+  - {x: 200, y: 92, z: 200}
+  - {x: 230, y: 100, z: 230}
+  - {x: 260, y: 106, z: 260}
+  - {x: 300, y: 109.5, z: 300}
   speedBuffCount: {fileID: 283901821}
   jumpBuffCount: {fileID: 949196174}
   buttons: []
