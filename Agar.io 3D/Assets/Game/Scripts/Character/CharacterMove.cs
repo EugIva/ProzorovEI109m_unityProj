@@ -29,6 +29,7 @@ public class CharacterMove : MonoBehaviour
         float Y = Input.GetAxis("Vertical");
 
         Vector3 moveInput = new(X, 0, Y);
+        moveInput.Normalize();
 
         Vector3 moveDirection = Quaternion.Euler(0, camera.eulerAngles.y, 0) * moveInput;
 

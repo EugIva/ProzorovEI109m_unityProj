@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5c01607a9e38f49906ff61153b5034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lerpFactor: 0.04
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
