@@ -35,7 +35,7 @@ public class EnemyStats : MonoBehaviour
         if (increaseMass)
         {
             Mass += value;
-            speed -= value / 500;
+            //speed -= value / 700;
 
             transform.localScale += new Vector3(value, value, value) / 100;
             enemyMove.FOV += value / 100;
@@ -43,7 +43,7 @@ public class EnemyStats : MonoBehaviour
         }
         //CancelAllBuffs();
         Mass -= value * 2;
-        speed += value / 250;
+        //speed += value / 350;
 
         transform.localScale -= new Vector3(value, value, value) / 50;
         enemyMove.FOV -= value / 50;
@@ -60,7 +60,7 @@ public class EnemyStats : MonoBehaviour
 
     private IEnumerator AddSpeedBuff2(byte seconds, float reward)
     {
-        Speed += reward / 20;
+        Speed += reward / 12;
         while (seconds > 0)
         {
             if (!Timer.isPause)
@@ -70,7 +70,7 @@ public class EnemyStats : MonoBehaviour
             }
             yield return new WaitForSecondsRealtime(0.3f);
         }
-        Speed -= reward / 20;
+        Speed -= reward / 12;
         yield break;
     }
     private void GiveMassFor(EnemyStats bot)

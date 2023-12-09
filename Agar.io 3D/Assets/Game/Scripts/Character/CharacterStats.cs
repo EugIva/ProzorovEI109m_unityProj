@@ -13,7 +13,7 @@ public class CharacterStats : MonoBehaviour
         set
         {
             mass = value;
-            if(mass <= 0)
+            if(mass <= 3)
             {
                 if (GameController.Instance.isUnlimited)
                 {

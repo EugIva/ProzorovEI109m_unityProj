@@ -1483,12 +1483,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxEnemiesInMap: 100
-  spawnRate: 10
   EnemyPrefab:
   - {fileID: 5516894490740525387, guid: 812e3b57d48bb2c4d8aba1b561deeac7, type: 3}
   - {fileID: 5516894490740525387, guid: 231b33af55993cf419a46fa898ba8cfe, type: 3}
   - {fileID: 5516894490740525387, guid: b9dfbd51c73b04245a444bcd0a2320da, type: 3}
-  spawnWeights: []
+  spawnWeights:
+  - 68
+  - 25
+  - 7
+  spawnRate: 10
   firstBorder: {fileID: 379916386}
   secondBorder: {fileID: 1560758435}
   terrain: {fileID: 2044392099}
@@ -1549,6 +1552,7 @@ MonoBehaviour:
   - 25
   - 10
   spawnRate: 1
+  spawnRadius: 0.3
   firstBorder: {fileID: 721617312}
   secondBorder: {fileID: 1030504516}
   terrain: {fileID: 2044392099}
@@ -2021,7 +2025,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1984350993}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 49, y: 82, z: 49}
+  m_LocalPosition: {x: 49, y: 96, z: 49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2039,8 +2043,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 14, z: 302}
-  m_Center: {x: 0, y: 7, z: 151.5}
+  m_Size: {x: 0.5, y: 23.3, z: 302}
+  m_Center: {x: 0, y: 4.9, z: 151.5}
 --- !u!65 &1984350996
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2052,8 +2056,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 302, y: 14, z: 0.5}
-  m_Center: {x: 151, y: 7, z: 302.25}
+  m_Size: {x: 302, y: 21.2, z: 0.5}
+  m_Center: {x: 151, y: 3.3, z: 302.25}
 --- !u!65 &1984350997
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2065,8 +2069,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 14, z: 302}
-  m_Center: {x: 302, y: 7, z: 151.5}
+  m_Size: {x: 0.5, y: 21.1, z: 302}
+  m_Center: {x: 302, y: 3.4, z: 151.5}
 --- !u!65 &1984350998
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2078,8 +2082,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 302, y: 14, z: 0.5}
-  m_Center: {x: 151, y: 7, z: 0.5}
+  m_Size: {x: 302, y: 19, z: 0.5}
+  m_Center: {x: 151, y: 4.4, z: 0.5}
 --- !u!4 &2025548335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5549238161226978675, guid: cc14037c52d5fa743bf4b887da64d931, type: 3}

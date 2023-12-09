@@ -52,7 +52,7 @@ public class EnemyMove : MonoBehaviour
             //Run away from object
             else
             {
-                Vector3 awayDirection = -direction.normalized;
+                Vector3 awayDirection = -direction;
                 rb.velocity = new Vector3(awayDirection.x, 0, awayDirection.z) * botStats.Speed / (botStats.Mass * botStats.SpeedCoeficient);
 
                 if (distance >= FOV * 2)

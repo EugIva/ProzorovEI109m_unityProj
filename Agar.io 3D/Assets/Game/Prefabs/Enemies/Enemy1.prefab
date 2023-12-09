@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 10
-  speed: 0.45
+  speed: 0.5
   speedCoeficient: 0.032
   enemyMove: {fileID: 5516894490740525379}
 --- !u!114 &5516894490740525379
