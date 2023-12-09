@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -40,8 +41,8 @@ public class GameController : MonoBehaviour
         Time.timeScale = 2;
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            buttons[0].onClick.AddListener(GameManager.Instance.SetUnlimitedMode);
-            buttons[1].onClick.AddListener(GameManager.Instance.SetBattleRoyaleMode);
+            buttons[0].onClick.AddListener(() => GameManager.Instance.SetUnlimitedMode(buttons, 0));
+            buttons[1].onClick.AddListener(() => GameManager.Instance.SetBattleRoyaleMode(buttons, 1));
             buttons[2].onClick.AddListener(GameManager.Instance.StartGame);
             buttons[3].onClick.AddListener(CloseGame);
             locationButtons[0].onClick.AddListener(() => SetLocation(1));
@@ -110,9 +111,24 @@ public class GameController : MonoBehaviour
     }
     public void SetLocation(int index)
     {
+        VisualizeSelectedButton(locationButtons, index - 1, new Vector3(0.93f, 0.93f, 1), new Vector3(0.85f, 0.85f, 1));
         GameManager.Instance.location = (GameManager.Location)index;
     }
     public void LoadScene(int sceneIndex) => SceneManager.LoadScene(sceneIndex);
+    public void VisualizeSelectedButton(Button[] buttons, int clicketButtonIndex, Vector3 baseScale, Vector3 newScale, params Button[] excludeButtons)
+    {
+        foreach (var button in buttons)
+        {
+            if(excludeButtons.Contains(button))
+            {
+                continue;
+            }
+            button.transform.localScale = baseScale;
+            button.GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f);
+        }
+        buttons[clicketButtonIndex].transform.localScale = newScale;
+        buttons[clicketButtonIndex].GetComponent<Image>().color = Color.white;
+    }
     public void RespawnCharacter()
     {
         character = FindObjectOfType<CharacterStats>().transform;

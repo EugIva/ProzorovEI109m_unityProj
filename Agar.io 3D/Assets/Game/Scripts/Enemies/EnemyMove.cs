@@ -76,11 +76,7 @@ public class EnemyMove : MonoBehaviour
         if (currentObject != null)
         {
             float distance = Vector3.Distance(transform.position, currentObject.transform.position);
-            //None physic movement
-            //float step = speed * Time.fixedDeltaTime;
-            //transform.position = Vector3.MoveTowards(transform.position, currentObject.transform.position, step);
 
-            //Physic movement
             Vector3 direction = currentObject.transform.position - transform.position;
             direction.Normalize();
 
@@ -93,7 +89,7 @@ public class EnemyMove : MonoBehaviour
     }
     private void CreatePhysicsCircle()
     {
-        if(currentObject == null && IsBusy() || currentObject == null && foundEnemy)
+        if (currentObject == null && IsBusy() || currentObject == null && foundEnemy)
         {
             MissingObject();
             return;
@@ -102,7 +98,7 @@ public class EnemyMove : MonoBehaviour
         foreach (var collider in colliders)
         {
             //Found Enemy
-            if(collider.gameObject != gameObject)
+            if (collider.gameObject != gameObject)
             {
                 //Priority number 1
                 //Found Other bot
@@ -130,6 +126,19 @@ public class EnemyMove : MonoBehaviour
                 {
                     currentObject = collider.transform;
                     busy = true;
+
+                    if (currentObject.name.Equals("red_cube(Clone)"))
+                    {
+                        if (Random.Range(0, 2) == 0)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            currentObject = null;
+                            return;
+                        }
+                    }
                     return;
                 }
             }

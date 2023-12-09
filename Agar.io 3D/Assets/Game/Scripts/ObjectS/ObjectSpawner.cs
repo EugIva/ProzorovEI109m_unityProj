@@ -92,9 +92,6 @@ public class ObjectSpawner : MonoBehaviour
     {
         while (true)
         {
-            //yield return new WaitForSeconds(1.5f);
-            //yield return new WaitUntil(() => objectsInMap < MaxObjectsInMap / 2);
-            //SpawnObjects();
             if (!Timer.isPause)
             {
                 yield return new WaitForSecondsRealtime(1.5f);

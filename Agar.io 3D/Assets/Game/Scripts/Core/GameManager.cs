@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,8 +38,16 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 144;
         QualitySettings.vSyncCount = 0;
     }
-    public void SetUnlimitedMode() => gamemodeType = GamemodeType.unlimited;
-    public void SetBattleRoyaleMode() => gamemodeType = GamemodeType.battleRoyale;
+    public void SetUnlimitedMode(Button[] buttons, int clicketButtonIndex)
+    {
+        GameController.Instance.VisualizeSelectedButton(buttons, clicketButtonIndex, new Vector3(1.05f, 1.05f, 1), Vector3.one, buttons[2], buttons[3]);
+        gamemodeType = GamemodeType.unlimited;
+    }
+    public void SetBattleRoyaleMode(Button[] buttons, int clicketButtonIndex)
+    {
+        GameController.Instance.VisualizeSelectedButton(buttons, clicketButtonIndex, new Vector3(1.05f, 1.05f, 1), Vector3.one, buttons[2], buttons[3]);
+        gamemodeType = GamemodeType.battleRoyale;
+    }
 
     public void StartGame()
     {

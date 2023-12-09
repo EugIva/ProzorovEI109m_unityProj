@@ -61,7 +61,7 @@ public class CharacterStats : MonoBehaviour
             Speed -= value / 700;
             charachterMove.groundCheckDistance += value / 200;
 
-            camera.fieldOfView += value / 20;
+            camera.fieldOfView += value / 10;
 
             transform.localScale += new Vector3(value, value, value) / 100;
             return;
@@ -72,7 +72,7 @@ public class CharacterStats : MonoBehaviour
         Speed += value / 350;
         charachterMove.groundCheckDistance -= value / 100;
 
-        camera.fieldOfView -= value / 10f;
+        camera.fieldOfView -= value / 5f;
 
         transform.localScale -= new Vector3(value, value, value) / 50;
     }
